@@ -9,6 +9,28 @@
 {% endblock %}
 
 {% block content %}
+    <div class="logo">
+        <h2>
+            <img src="https://99gifshop.neocities.org/items/11/tulips_blue_lg_clr.gif" title="TaskZenith" width="30%">
+            TaskZenith
+        </h2>
+        <div class="close">
+            <span class="material-symbols-outlined">close</span>
+        </div>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="/" id="dashboard-link" class="fill"><span class="material-symbols-outlined full">dashboard</span><span class="title-full">Dashboard</span></a></li>
+            <li><a href="/tasks" id="tasks-link"><span class="material-symbols-outlined">check_box</span><span class="title">Tasks</span></a></li>
+            <li><a href="/goals" id="goals-link"><span class="material-symbols-outlined">flag</span><span class="title">Goals</span></a></li>
+            <li><a href="/schedule" id="schedule-link"><span class="material-symbols-outlined">calendar_month</span><span class="title">Schedule</span></a></li>
+            <li><a href="/projects" id="projects-link"><span class="material-symbols-outlined">inventory_2</span><span class="title">Projects</span></a></li>
+            <li><a href="/profile" id="profile-link"><span class="material-symbols-outlined">group</span><span class="title">My Profile</span></a></li>
+        </ul>
+    </nav>
+{% endblock %}
+
+{% block additional_content %}
     <!-- projectCard start -->
     <div class="projectCard">
         <!-- projectTop start -->
@@ -405,7 +427,7 @@
         <!-- messagesUser start -->
         <div class="messagesUser">
             <div class="messagesUserImg">
-                <img src="/static/images/img5.jpg" alt="img5">
+                <img src="/static/images/img4.jpg" alt="img4">
             </div>
             <h2>Angelica Jean Evangelista<br><span>Documentation</span></h2>
         </div>
@@ -413,75 +435,75 @@
         <!-- messagesUser start -->
         <div class="messagesUser">
             <div class="messagesUserImg">
-                <img src="/static/images/img4.jpg" alt="img4">
+                <img src="/static/images/img5.jpg" alt="img5">
             </div>
             <h2>Arwen Reyes<br><span>Documentation</span></h2>
         </div>
         <!-- messagesUser end -->
     </div>
     <!-- messages end -->
-    {% endblock %}
+{% endblock %}
 
-    {% block scripts %}
-        <script>
-            // Function to handle link clicks in the left container
-            function handleLeftLinkClick(event) {
-                event.preventDefault();
+{% block scripts %}
+    <script>
+        // Function to handle link clicks in the left container
+        function handleLeftLinkClick(event) {
+            event.preventDefault();
 
-                // Activate the clicked link
-                let linkId = event.currentTarget.id;
-                activateIcon(linkId);
+            // Activate the clicked link
+            let linkId = event.currentTarget.id;
+            activateIcon(linkId);
 
-                // Update the title in the right top container
-                let linkTitle = event.currentTarget.querySelector('.title').textContent;
-                document.getElementById('right-top-title').textContent = linkTitle;
+            // Update the title in the right top container
+            let linkTitle = event.currentTarget.querySelector('.title').textContent;
+            document.getElementById('right-top-title').textContent = linkTitle;
 
-                // Fetch and load appropriate content using AJAX or other methods
-                switch (linkId) {
-                    case 'dashboard-link':
-                        loadContent('/dashboard');
-                        break;
-                    case 'tasks-link':
-                        loadContent('/tasks');
-                        break;
-                    case 'goals-link':
-                        loadContent('/goals');
-                        break;
-                    case 'schedule-link':
-                        loadContent('/schedule');
-                        break;
-                    case 'projects-link':
-                        loadContent('/projects');
-                        break;
-                    case 'profile-link':
-                        loadContent('/profile');
-                        break;
-                    default:
-                        break;
-                }
+            // Fetch and load appropriate content using AJAX or other methods
+            switch (linkId) {
+                case 'dashboard-link':
+                    loadContent('/dashboard');
+                    break;
+                case 'tasks-link':
+                    loadContent('/tasks');
+                    break;
+                case 'goals-link':
+                    loadContent('/goals');
+                    break;
+                case 'schedule-link':
+                    loadContent('/schedule');
+                    break;
+                case 'projects-link':
+                    loadContent('/projects');
+                    break;
+                case 'profile-link':
+                    loadContent('/profile');
+                    break;
+                default:
+                    break;
             }
+        }
 
-            // Function to fetch and load content dynamically
-            function loadContent(url) {
-                fetch(url)
-                    .then(response => response.text())
-                    .then(data => {
-                        document.getElementById('dynamic-content').innerHTML = data;
-                    })
-                    .catch(error => {
-                        console.error('Error fetching content:', error);
-                    });
-            }
+        // Function to fetch and load content dynamically
+        function loadContent(url) {
+            fetch(url)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('dynamic-content').innerHTML = data;
+                })
+                .catch(error => {
+                    console.error('Error fetching content:', error);
+                });
+        }
 
-            // Attach click event listeners to navigation links in the left container
-            document.getElementById('dashboard-link').addEventListener('click', handleLeftLinkClick);
-            document.getElementById('tasks-link').addEventListener('click', handleLeftLinkClick);
-            document.getElementById('goals-link').addEventListener('click', handleLeftLinkClick);
-            document.getElementById('schedule-link').addEventListener('click', handleLeftLinkClick);
-            document.getElementById('projects-link').addEventListener('click', handleLeftLinkClick);
-            document.getElementById('profile-link').addEventListener('click', handleLeftLinkClick);
+        // Attach click event listeners to navigation links in the left container
+        document.getElementById('dashboard-link').addEventListener('click', handleLeftLinkClick);
+        document.getElementById('tasks-link').addEventListener('click', handleLeftLinkClick);
+        document.getElementById('goals-link').addEventListener('click', handleLeftLinkClick);
+        document.getElementById('schedule-link').addEventListener('click', handleLeftLinkClick);
+        document.getElementById('projects-link').addEventListener('click', handleLeftLinkClick);
+        document.getElementById('profile-link').addEventListener('click', handleLeftLinkClick);
 
-            // Simulate a click on the dashboard link to initialize the UI
-            document.getElementById('dashboard-link').click();
-        </script>
-    {% endblock %}
+        // Simulate a click on the dashboard link to initialize the UI
+        document.getElementById('dashboard-link').click();
+    </script>
+{% endblock %}
