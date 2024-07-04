@@ -9,6 +9,92 @@
 {% endblock %}
 
 {% block content %}
-<h2>Tasks Overview</h2>
-<p>List of tasks and their details.</p>
+    <div class="logo">
+        <h2>
+            <img src="https://99gifshop.neocities.org/items/11/tulips_blue_lg_clr.gif" title="TaskZenith" width="30%">
+            TaskZenith
+        </h2>
+        <div class="close">
+            <span class="material-symbols-outlined">close</span>
+        </div>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="/" id="dashboard-link"><span class="material-symbols-outlined">dashboard</span><span class="title">Dashboard</span></a></li>
+            <li><a href="/tasks" id="tasks-link" class="fill"><span class="material-symbols-outlined full">check_box</span><span class="title-full">Tasks</span></a></li>
+            <li><a href="/goals" id="goals-link"><span class="material-symbols-outlined">flag</span><span class="title">Goals</span></a></li>
+            <li><a href="/schedule" id="schedule-link"><span class="material-symbols-outlined">calendar_month</span><span class="title">Schedule</span></a></li>
+            <li><a href="/projects" id="projects-link"><span class="material-symbols-outlined">inventory_2</span><span class="title">Projects</span></a></li>
+            <li><a href="/profile" id="profile-link"><span class="material-symbols-outlined">group</span><span class="title">My Profile</span></a></li>
+        </ul>
+    </nav>
+{% endblock %}
+
+{% block additional_content %}
+<!-- Tasks: To Do start -->
+<div class='tasks-column'>
+    <div class='tasks-column-heading'>
+        <h2 class='tasks-column-heading title'>Task Ready</h2>
+    </div>
+        <div class='task' draggable='true'>
+            <div class='task__tags'><span class='task__tag task__tag--academics'>Copywriting</span>
+            <p>My Task 1</p>
+            <div class='task__stats'>
+                <span><time datetime="2021-11-24T20:00:00"><i class="fas fa-flag"></i>Nov 24</time></span>
+                <span><i class="fas fa-comment"></i>3</span>
+                <div class="priority">
+                    <h2>High Priority</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class='task' draggable='true'>
+            <div class='task__tags'><span class='task__tag task__tag--life'>UI Design</span>
+            <p>My Task 2</p>
+            <div class='task__stats'>
+                <span><time datetime="2021-11-24T20:00:00"><i class="fas fa-flag"></i>Nov 24</time></span>
+                <span><i class="fas fa-comment"></i>3</span>
+                <div class="priority">
+                    <h2>High Priority</h2>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+    <div class="projectCard">
+        <!-- projectTop start -->
+        <div class="projectTop">
+            <h2>DAA Final Project<br>
+        </div>
+        <div class="tasks">
+            <span class="line"></span>
+        </div>
+        <!-- projectTop end -->
+        <!-- projectProgress start -->
+        <div class="projectProgress">
+            <div class="process">
+                <h2>In Progress</h2>
+            </div>
+            <div class="priority">
+                <h2>High Priority</h2>
+            </div>
+        </div>
+        <!-- projectProgress end -->
+        <!-- task start -->
+        <div class="task">
+            <span class="material-symbols-outlined">
+                event
+            </span>
+            <h2>7 July 2024</h2>
+        </div>
+    </div>
+<!-- Tasks: To Do end -->
+{% endblock %}
+
+
+{% block scripts %}
+
 {% endblock %}
