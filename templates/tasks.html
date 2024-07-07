@@ -168,8 +168,10 @@
         var tasksProgress = document.createElement('div');
         tasksProgress.className = 'tasksProgress';
         var process = document.createElement('div');
-        process.innerHTML = '<h2>In Progress</h2>';
+        process.className = 'process';
+        process.innerHTML = '<h2>School</h2>';
         var priority = document.createElement('div');
+        priority.className = 'priority';
         priority.innerHTML = '<h2>High Priority</h2>';
         tasksProgress.appendChild(process);
         tasksProgress.appendChild(priority);
@@ -179,6 +181,7 @@
         tasksTop.innerHTML = `<h2>${objData.value}<br></h2>`;
 
         var tasks = document.createElement('div');
+        tasks.className = 'tasks';
         tasks.innerHTML = '<h2>Due: 7 July 2024</h2>';
 
         taskCard.appendChild(tasksProgress);
