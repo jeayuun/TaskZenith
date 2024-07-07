@@ -36,7 +36,8 @@
     <!-- user will input the task here -->
     <div class="inputBox">
         <input type="text" placeholder="Enter a task" id="userInput">
-        <button type="submit">Add to list</button>
+        <button type="submit">Add Task</button>
+        <button style="background: linear-gradient(145deg, #d488ea, #8389f9);">Sort Tasks</button>
     </div>
 </form>
 <div class="tasksContainer">
@@ -61,14 +62,6 @@
 </div>
 <!-- Tasks: To Do end -->
 
-<!-- descriptions for each task -->
-<section id="descrpContainer">
-    <section id="descrpWrapper">
-        <textarea id="description" placeholder="Enter your notes about this task"></textarea>
-        <button id="cancel">Cancel</button>
-        <button id="save">Save Changes</button>
-    </section>
-</section>
 
 <script>
     var storage = [];
@@ -82,7 +75,7 @@
             var parsed = JSON.parse(getItemOnLocalStorage('tasks'));
             var max = 0;
             for (var i = 0; i < parsed.length; i++) {
-                createElement(parsed[i]);
+                createElement(parsed[i]);  // Append tasks to their correct sections
                 if (parsed[i].id > max) {
                     max = parsed[i].id;
                 }
@@ -90,16 +83,43 @@
             storage = parsed;
             liId = max;
             spanId = max * -1;
+
+            // Initialize process classes based on stored data
+            parsed.forEach(function(task) {
+                var taskElement = document.getElementById(task.id);
+                var processElement = taskElement.querySelector('.process');
+
+                // Remove all process color classes
+                processElement.classList.remove('school-color', 'work-color', 'personal-color', 'life-color');
+
+                // Add the correct process color class based on task's process attribute
+                switch (task.process) {
+                    case 'School':
+                        processElement.classList.add('school-color');
+                        break;
+                    case 'Work':
+                        processElement.classList.add('work-color');
+                        break;
+                    case 'Personal':
+                        processElement.classList.add('personal-color');
+                        break;
+                    case 'Life':
+                        processElement.classList.add('life-color');
+                        break;
+                    default:
+                        processElement.classList.add('school-color'); // Default to school color if not specified
+                }
+            });
         }
     })();
 
     // Sections events
     var domSections = document.getElementsByClassName('tasksSection');
     for (var i = 0; i < domSections.length; i++) {
-        addEventsTosection(domSections[i]);
+        addEventsToSection(domSections[i]);
     }
 
-    function addEventsTosection(section) {
+    function addEventsToSection(section) {
         section.addEventListener('dragover', function (event) {
             event.preventDefault();
         });
@@ -108,15 +128,20 @@
             var taskElement = document.getElementById(taskId);
             if (event.target.className.includes('tasksSection')) {
                 event.target.appendChild(taskElement);
-                var liSpanId = parseInt(taskId) * -1 + '';
+
+                // Update the parent property of the task in the storage array
                 var elementObj = {
                     id: parseInt(taskId),
-                    value: document.getElementById(liSpanId).innerText,
+                    value: document.getElementById(taskId).innerText,  // Corrected to get the task's text
                     parent: event.target.id
                 };
+
+                // Find the task in the storage array and update its parent
                 storage.find(function (storageItem) {
                     return storageItem.id === elementObj.id;
                 }).parent = event.target.id;
+
+                // Update the local storage
                 setItemOnLocalStorage('tasks', JSON.stringify(storage));
             }
         });
@@ -130,7 +155,9 @@
             var objData = {
                 id: ++liId,
                 value: userInput,
-                parent: 'toDo'
+                parent: 'toDo',
+                priority: 'Low Priority',
+                process: 'School'
             };
             createElement(objData);
             setItemOnLocalStorage('tasks', JSON.stringify(storage));
@@ -146,11 +173,13 @@
         var obj = {
             id: objData.id,
             value: objData.value,
-            parent: objData.parent
+            parent: objData.parent,
+            priority: objData.priority || 'Low Priority',
+            process: objData.process || 'School'
         };
         var list = document.createElement('li');
         document.getElementById(obj.parent).appendChild(list);
-        createListChildren(list, objData);
+        createListChildren(list, obj);
         list.id = objData.id;
         list.setAttribute('draggable', true);
         list.addEventListener('dragstart', function (event) {
@@ -158,6 +187,72 @@
         });
         storage.push(obj);
     }
+
+    function togglePriority(priorityElement, taskId) {
+        var currentPriority = priorityElement.innerText.trim();
+        var newPriority;
+
+        switch (currentPriority) {
+            case 'Medium Priority':
+                newPriority = 'Low Priority';
+                priorityElement.classList.remove('medium-priority');
+                priorityElement.classList.add('low-priority');
+                break;
+            case 'Low Priority':
+                newPriority = 'High Priority';
+                priorityElement.classList.remove('low-priority');
+                priorityElement.classList.add('high-priority');
+                break;
+            case 'High Priority':
+                newPriority = 'Medium Priority';
+                priorityElement.classList.remove('high-priority');
+                priorityElement.classList.add('medium-priority');
+                break;
+        }
+
+        priorityElement.innerHTML = `<h2>${newPriority}</h2>`;
+
+        // Update the priority in storage
+        var task = storage.find(item => item.id === taskId);
+        task.priority = newPriority;
+        setItemOnLocalStorage('tasks', JSON.stringify(storage));
+    }
+
+    function toggleProcess(processElement, taskId) {
+        var currentProcess = processElement.innerText.trim();
+        var newProcess;
+
+        switch (currentProcess) {
+            case 'School':
+                newProcess = 'Work';
+                processElement.classList.remove('school-color');
+                processElement.classList.add('work-color');
+                break;
+            case 'Work':
+                newProcess = 'Personal';
+                processElement.classList.remove('work-color');
+                processElement.classList.add('personal-color');
+                break;
+            case 'Personal':
+                newProcess = 'Life';
+                processElement.classList.remove('personal-color');
+                processElement.classList.add('life-color');
+                break;
+            case 'Life':
+                newProcess = 'School';
+                processElement.classList.remove('life-color');
+                processElement.classList.add('school-color');
+                break;
+        }
+
+        processElement.innerHTML = `<h2>${newProcess}</h2>`;
+
+        // Update the process in storage
+        var task = storage.find(item => item.id === taskId);
+        task.process = newProcess;
+        setItemOnLocalStorage('tasks', JSON.stringify(storage));
+    }
+
 
     function createListChildren(list, objData) {
         // Create task structure based on provided HTML
@@ -167,12 +262,23 @@
 
         var tasksProgress = document.createElement('div');
         tasksProgress.className = 'tasksProgress';
+
+        // Process
         var process = document.createElement('div');
         process.className = 'process';
-        process.innerHTML = '<h2>School</h2>';
+        process.innerHTML = `<h2>${objData.process}</h2>`;
+        process.addEventListener('click', function() {
+            toggleProcess(process, objData.id);
+        });
+
+        // Priority
         var priority = document.createElement('div');
-        priority.className = 'priority';
-        priority.innerHTML = '<h2>High Priority</h2>';
+        priority.className = `priority ${objData.priority.replace(' ', '-').toLowerCase()}`;
+        priority.innerHTML = `<h2>${objData.priority}</h2>`;
+        priority.addEventListener('click', function() {
+            togglePriority(priority, objData.id);
+        });
+
         tasksProgress.appendChild(process);
         tasksProgress.appendChild(priority);
 
@@ -180,6 +286,7 @@
         tasksTop.className = 'tasksTop';
         tasksTop.innerHTML = `<h2>${objData.value}<br></h2>`;
 
+        // Due Date
         var tasks = document.createElement('div');
         tasks.className = 'tasks';
         tasks.innerHTML = '<h2>Due: 7 July 2024</h2>';
@@ -191,6 +298,21 @@
         list.appendChild(taskCard);
     }
 
+
+    // Delete all tasks button click event
+    document.getElementById('deleteAllTasksBtn').addEventListener('click', function() {
+        var confirmation = confirm('Do you want to delete all tasks?');
+        if (confirmation) {
+            // Clear storage and DOM
+            storage = [];
+            localStorage.removeItem('tasks');
+            document.querySelectorAll('.tasksSection').forEach(function(section) {
+                section.innerHTML = ''; // Clear each tasksSection
+            });
+        }
+    });
+
+
     // Functions to set and get elements from local storage
     function setItemOnLocalStorage(key, value) {
         localStorage.setItem(key, value);
@@ -199,111 +321,6 @@
     function getItemOnLocalStorage(key) {
         return localStorage.getItem(key);
     }
-
-    // Note and delete functions
-    function handleIconClick(e) {
-        var uList = document.getElementById(e.target.id).parentElement.nextSibling;
-        if (e.target.className == 'fas fa-angle-down') {
-            e.target.className = 'fas fa-angle-up';
-            uList.style.display = 'block';
-            uList.style.zIndex = '1';
-        } else {
-            e.target.className = 'fas fa-angle-down';
-            uList.style.display = 'none';
-            uList.style.zIndex = '0';
-        }
-    }
-
-    function handleNoteBtnClick(e) {
-        // Close the ul of buttons
-        var icon = e.target.parentElement.parentElement.children[0].children[1];
-        icon.className = 'fas fa-angle-down';
-        var uList = e.target.parentElement;
-        uList.style.display = 'none';
-        uList.style.zIndex = '0';
-
-        // Save which element clicked
-        noteBtnClicked = e.target.parentElement.parentElement.id;
-
-        // If this element has previous note --> display it
-        for (var i = 0; i < storage.length; i++) {
-            if (storage[i].id == noteBtnClicked && storage[i].note) {
-                document.getElementById('description').value = storage[i].note;
-            }
-        }
-
-        // Make note section appear and be stable after that
-        document.getElementById('descrpContainer').style.animationName = 'show';
-        setTimeout(function () {
-            document.getElementById('descrpContainer').style.maxHeight = '90vh';
-        }, 1800);
-
-        // Give the background grey overlay
-        document.getElementsByTagName('main')[0].className = 'mainAfter';
-    }
-
-    function handleDeleteBtnClick(e) {
-        var confirmation = confirm('Do you want to delete this task?');
-        if (confirmation) {
-            var targetId = e.target.parentElement.parentElement.id;
-            var newStorage = [];
-
-            // Delete from storage array
-            for (var i = 0; i < storage.length; i++) {
-                if (storage[i].id != targetId) {
-                    newStorage.push(storage[i]);
-                }
-            }
-            storage = newStorage;
-            // Delete from local storage
-            setItemOnLocalStorage('tasks', JSON.stringify(storage));
-
-            // Delete from DOM tree
-            document.getElementById(targetId).remove();
-        }
-    }
-
-    // Save and cancel buttons listeners
-    document.getElementById('cancel').addEventListener('click', cancelNoteHandler);
-    document.getElementById('save').addEventListener('click', saveNoteHandler);
-
-    function cancelNoteHandler() {
-        // Empty the note text area
-        setTimeout(function () {
-            document.getElementById('description').value = '';
-        }, 2000);
-
-        // Make note section disappear
-        document.getElementById('descrpContainer').style.animationName = 'hide';
-        setTimeout(function () {
-            document.getElementById('descrpContainer').style.maxHeight = '0';
-        }, 1800);
-
-        // Remove the background grey overlay
-        document.getElementsByTagName('main')[0].className = '';
-    }
-
-    function saveNoteHandler() {
-        for (var i = 0; i < storage.length; i++) {
-            if (storage[i].id == noteBtnClicked) {
-                storage[i].note = document.getElementById('description').value;
-            }
-        }
-        setItemOnLocalStorage('tasks', JSON.stringify(storage));
-
-        // Empty the note text area and close it
-        cancelNoteHandler();
-    }
-
-    // Event delegation for dynamically added note and delete buttons
-    document.addEventListener('click', function (event) {
-        if (event.target.classList.contains('noteBtn')) {
-            handleNoteBtnClick(event);
-        }
-        if (event.target.classList.contains('deleteBtn')) {
-            handleDeleteBtnClick(event);
-        }
-    });
 
     // Drag and drop functions
     function allowDrop(event) {
@@ -314,8 +331,7 @@
         event.dataTransfer.setData('text', event.target.id);
     }
 
-    function drop(event) {
-        event.preventDefault();
+    section.addEventListener('drop', function (event) {
         var taskId = event.dataTransfer.getData('text');
         var taskElement = document.getElementById(taskId);
         if (event.target.className.includes('tasksSection')) {
@@ -331,7 +347,7 @@
             }).parent = event.target.id;
             setItemOnLocalStorage('tasks', JSON.stringify(storage));
         }
-    }
+    });
 </script>
 
 {% endblock %}
