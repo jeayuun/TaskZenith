@@ -12,31 +12,15 @@
     <link href="/static/styles.css" rel="stylesheet">
     <title>TaskZenith: Enhancing Productivity - {% block title %}{% endblock %}</title>
     <link rel="shortcut icon" href="https://99gifshop.neocities.org/items/11/tulips_blue_lg_clr.gif">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap" rel="stylesheet">
 </head>
 <body>
     {% if session.get("user_id") %}
         <div class="container">
             <div class="left">
                 <header>
-                    <div class="logo">
-                        <h2>
-                            <img src="https://99gifshop.neocities.org/items/11/tulips_blue_lg_clr.gif" title="TaskZenith" width="30%">
-                            TaskZenith
-                        </h2>
-                        <div class="close">
-                            <span class="material-symbols-outlined">close</span>
-                        </div>
-                    </div>
-                    <nav>
-                        <ul>
-                            <li><a href="/" id="dashboard-link"><span class="material-symbols-outlined">dashboard</span><span class="title">Dashboard</span></a></li>
-                            <li><a href="/tasks" id="tasks-link"><span class="material-symbols-outlined">check_box</span><span class="title">Tasks</span></a></li>
-                            <li><a href="/goals" id="goals-link"><span class="material-symbols-outlined">flag</span><span class="title">Goals</span></a></li>
-                            <li><a href="/schedule" id="schedule-link"><span class="material-symbols-outlined">calendar_month</span><span class="title">Schedule</span></a></li>
-                            <li><a href="/projects" id="projects-link"><span class="material-symbols-outlined">inventory_2</span><span class="title">Projects</span></a></li>
-                            <li><a href="/profile" id="profile-link"><span class="material-symbols-outlined">group</span><span class="title">My Profile</span></a></li>
-                        </ul>
-                    </nav>
+                    {% block content %}{% endblock %}
                 </header>
                 <div class="about">
                     <h4>TaskZenith: Enhancing Productivity with <strong>SELECTION SORT</strong></h4>
@@ -58,7 +42,7 @@
                         <div class="userImg">
                             <img src="/static/images/img1.jpg" alt="user">
                         </div>
-                        <h2>Langa Hasegawa<br><span>Administrator</span></h2>
+                        <h2>Langa Hasegawa<br><span>TaskZenith User</span></h2>
                         <div class="arrow">
                             <span class="material-symbols-outlined">expand_more</span>
                         </div>
@@ -68,9 +52,7 @@
                         </div>
                     </div>
                 </div>
-                <main>
-                        {% block content %}{% endblock %}
-                </main>
+                    {% block additional_content %}{% endblock %}
             </div>
         </div>
     {% else %}
