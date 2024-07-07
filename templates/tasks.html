@@ -32,7 +32,7 @@
 
 {% block additional_content %}
 <!-- Tasks: To Do start -->
-<form autocomplete="off">
+<form autocomplete="off" id="taskForm">
     <!-- user will input the task here -->
     <div class="inputBox">
         <input type="text" placeholder="Enter a task" id="userInput">
@@ -42,20 +42,20 @@
 <div class="tasksContainer">
     <section id="container" class="tasksContainer">
         <section>
-            <h2 class="h2-style gold">To Do</h2>
-            <ul class="tasksSection" id="toDo"></ul>
+            <h2 class="toDo">To Do</h2>
+            <ul class="tasksSection" id="toDo" ondrop="drop(event)" ondragover="allowDrop(event)"></ul>
         </section>
         <section>
-            <h2 class="h2-style red">In Progress</h2>
-            <ul class="tasksSection" id="inProgress"></ul>
+            <h2 class="inProgress">In Progress</h2>
+            <ul class="tasksSection" id="inProgress" ondrop="drop(event)" ondragover="allowDrop(event)"></ul>
         </section>
         <section>
-            <h2 class="h2-style blue">In Review</h2>
-            <ul class="tasksSection" id="inReview"></ul>
+            <h2 class="inReview">In Review</h2>
+            <ul class="tasksSection" id="inReview" ondrop="drop(event)" ondragover="allowDrop(event)"></ul>
         </section>
         <section>
-            <h2 class="h2-style green">Completed</h2>
-            <ul class="tasksSection" id="completed"></ul>
+            <h2 class="completed">Completed</h2>
+            <ul class="tasksSection" id="completed" ondrop="drop(event)" ondragover="allowDrop(event)"></ul>
         </section>
     </section>
 </div>
@@ -69,16 +69,14 @@
         <button id="save">Save Changes</button>
     </section>
 </section>
-{% endblock %}
 
-{% block scripts %}
 <script>
     var storage = [];
     var liId = 0;
     var spanId = 0;
     var noteBtnClicked = 0;
 
-    // self-invoked function to get elements from local store
+    // Self-invoked function to get elements from local storage
     (function () {
         if (getItemOnLocalStorage('tasks')) {
             var parsed = JSON.parse(getItemOnLocalStorage('tasks'));
@@ -95,7 +93,7 @@
         }
     })();
 
-    // sections events
+    // Sections events
     var domSections = document.getElementsByClassName('tasksSection');
     for (var i = 0; i < domSections.length; i++) {
         addEventsTosection(domSections[i]);
@@ -106,24 +104,26 @@
             event.preventDefault();
         });
         section.addEventListener('drop', function (event) {
+            var taskId = event.dataTransfer.getData('text');
+            var taskElement = document.getElementById(taskId);
             if (event.target.className.includes('tasksSection')) {
-                event.target.appendChild(document.getElementById(event.dataTransfer.getData('text')));
-                var liSpanId = ((parseInt(event.dataTransfer.getData('text'))) * -1) + '';
-                // to change the parent of the element in data
+                event.target.appendChild(taskElement);
+                var liSpanId = parseInt(taskId) * -1 + '';
                 var elementObj = {
-                    id: parseInt(event.dataTransfer.getData('text')),
+                    id: parseInt(taskId),
                     value: document.getElementById(liSpanId).innerText,
                     parent: event.target.id
-                }
-                storage.push(elementObj);
-                // to store data in local storage
+                };
+                storage.find(function (storageItem) {
+                    return storageItem.id === elementObj.id;
+                }).parent = event.target.id;
                 setItemOnLocalStorage('tasks', JSON.stringify(storage));
             }
         });
     }
 
-    // submit btn function
-    document.getElementById('submit').addEventListener('click', function (e) {
+    // Submit btn function
+    document.getElementById('taskForm').addEventListener('submit', function (e) {
         e.preventDefault(); // Prevent form submission
         var userInput = document.getElementById('userInput').value;
         if (userInput) {
@@ -132,7 +132,7 @@
                 value: userInput,
                 parent: 'toDo'
             };
-            createElement(objData); // Fixed typo: change 'creatElement' to 'createElement'
+            createElement(objData);
             setItemOnLocalStorage('tasks', JSON.stringify(storage));
             document.getElementById('userInput').value = ''; // Clear the input field
         } else {
@@ -140,7 +140,7 @@
         }
     });
 
-    // functions to create a new element (task)
+    // Functions to create a new element (task)
     function createElement(objData) {
         console.log('Creating element:', objData); // Debugging
         var obj = {
@@ -155,11 +155,6 @@
         list.setAttribute('draggable', true);
         list.addEventListener('dragstart', function (event) {
             event.dataTransfer.setData('text', event.target.id);
-            for (var i = 0; i < storage.length; i++) {
-                if (storage[i].id == event.target.id) {
-                    storage.splice(i, 1);
-                }
-            }
         });
         storage.push(obj);
     }
@@ -173,10 +168,8 @@
         var tasksProgress = document.createElement('div');
         tasksProgress.className = 'tasksProgress';
         var process = document.createElement('div');
-        process.className = 'process';
         process.innerHTML = '<h2>In Progress</h2>';
         var priority = document.createElement('div');
-        priority.className = 'priority';
         priority.innerHTML = '<h2>High Priority</h2>';
         tasksProgress.appendChild(process);
         tasksProgress.appendChild(priority);
@@ -186,7 +179,6 @@
         tasksTop.innerHTML = `<h2>${objData.value}<br></h2>`;
 
         var tasks = document.createElement('div');
-        tasks.className = 'tasks';
         tasks.innerHTML = '<h2>Due: 7 July 2024</h2>';
 
         taskCard.appendChild(tasksProgress);
@@ -196,7 +188,7 @@
         list.appendChild(taskCard);
     }
 
-    // functions to set and get elements from local store
+    // Functions to set and get elements from local storage
     function setItemOnLocalStorage(key, value) {
         localStorage.setItem(key, value);
     }
@@ -205,11 +197,7 @@
         return localStorage.getItem(key);
     }
 
-    // ----------------------------------------------------------------
-    // note and delete functions
-    // ----------------------------------------------------------------
-
-    // function to display ul list or hide it (toggle)
+    // Note and delete functions
     function handleIconClick(e) {
         var uList = document.getElementById(e.target.id).parentElement.nextSibling;
         if (e.target.className == 'fas fa-angle-down') {
@@ -223,81 +211,72 @@
         }
     }
 
-    // ------------------------------------------------------
-    // ------------------------------------------------------
-
     function handleNoteBtnClick(e) {
-        // close the ul of buttons
+        // Close the ul of buttons
         var icon = e.target.parentElement.parentElement.children[0].children[1];
         icon.className = 'fas fa-angle-down';
         var uList = e.target.parentElement;
         uList.style.display = 'none';
         uList.style.zIndex = '0';
 
-        // save which element clicked
+        // Save which element clicked
         noteBtnClicked = e.target.parentElement.parentElement.id;
 
-        // if this element has previous note --> display it
+        // If this element has previous note --> display it
         for (var i = 0; i < storage.length; i++) {
             if (storage[i].id == noteBtnClicked && storage[i].note) {
                 document.getElementById('description').value = storage[i].note;
             }
         }
 
-        // make note section appear and be stable after that
+        // Make note section appear and be stable after that
         document.getElementById('descrpContainer').style.animationName = 'show';
         setTimeout(function () {
             document.getElementById('descrpContainer').style.maxHeight = '90vh';
         }, 1800);
 
-        // give the background grey overlay
+        // Give the background grey overlay
         document.getElementsByTagName('main')[0].className = 'mainAfter';
     }
 
-    // ------------------------------------------------------
-    // ------------------------------------------------------
-
     function handleDeleteBtnClick(e) {
-        var confirmation = confirm('Do you want to delete this task?')
+        var confirmation = confirm('Do you want to delete this task?');
         if (confirmation) {
             var targetId = e.target.parentElement.parentElement.id;
             var newStorage = [];
 
-            // delete from storage array
+            // Delete from storage array
             for (var i = 0; i < storage.length; i++) {
                 if (storage[i].id != targetId) {
                     newStorage.push(storage[i]);
                 }
             }
             storage = newStorage;
-            // delete from local storage
+            // Delete from local storage
             setItemOnLocalStorage('tasks', JSON.stringify(storage));
 
-            // delete from DOM tree
+            // Delete from DOM tree
             document.getElementById(targetId).remove();
         }
     }
 
-    // ------------------------------------------------------
-    // save and cancel buttons listeners
-    // ------------------------------------------------------
-
+    // Save and cancel buttons listeners
     document.getElementById('cancel').addEventListener('click', cancelNoteHandler);
     document.getElementById('save').addEventListener('click', saveNoteHandler);
 
     function cancelNoteHandler() {
-        // empty the note text area
+        // Empty the note text area
         setTimeout(function () {
             document.getElementById('description').value = '';
         }, 2000);
 
-        // make note section disappear
+        // Make note section disappear
         document.getElementById('descrpContainer').style.animationName = 'hide';
         setTimeout(function () {
             document.getElementById('descrpContainer').style.maxHeight = '0';
         }, 1800);
 
-        // remove the background grey overlay
+        // Remove the background grey overlay
         document.getElementsByTagName('main')[0].className = '';
     }
 
@@ -309,8 +288,47 @@
         }
         setItemOnLocalStorage('tasks', JSON.stringify(storage));
 
-        // empty the note text area and close it
+        // Empty the note text area and close it
         cancelNoteHandler();
     }
+
+    // Event delegation for dynamically added note and delete buttons
+    document.addEventListener('click', function (event) {
+        if (event.target.classList.contains('noteBtn')) {
+            handleNoteBtnClick(event);
+        }
+        if (event.target.classList.contains('deleteBtn')) {
+            handleDeleteBtnClick(event);
+        }
+    });
+
+    // Drag and drop functions
+    function allowDrop(event) {
+        event.preventDefault();
+    }
+
+    function drag(event) {
+        event.dataTransfer.setData('text', event.target.id);
+    }
+
+    function drop(event) {
+        event.preventDefault();
+        var taskId = event.dataTransfer.getData('text');
+        var taskElement = document.getElementById(taskId);
+        if (event.target.className.includes('tasksSection')) {
+            event.target.appendChild(taskElement);
+            var liSpanId = parseInt(taskId) * -1 + '';
+            var elementObj = {
+                id: parseInt(taskId),
+                value: document.getElementById(liSpanId).innerText,
+                parent: event.target.id
+            };
+            storage.find(function (storageItem) {
+                return storageItem.id === elementObj.id;
+            }).parent = event.target.id;
+            setItemOnLocalStorage('tasks', JSON.stringify(storage));
+        }
+    }
 </script>
+
 {% endblock %}
