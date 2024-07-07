@@ -434,14 +434,402 @@ body {
     gap: 20px;
 }
 
+.container .right .tasksContainer {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+    margin: 0 auto;
+}
+
+/* tasksCard start */
+
+#form{
+    width: 30%;
+    margin: 1px auto;
+    text-align: center;
+}
+
+#form button,
+#save,
+#cancel{
+    border-radius: 30px;
+    box-shadow: none;
+    border: none;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+#form input{
+    padding: 13px 20px;
+    margin-right: 2.7rem;
+    width: 58%;
+    background-color: white;
+}
+
+#form input,
+#form input::placeholder{
+    letter-spacing: 0.7px;
+}
+
+.inputBox {
+    margin: 1px auto;
+    position: relative;
+    width: 750px;
+    height: 40px;
+    border-radius: 30px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 10px;
+    gap: 10px;
+}
+
+.inputBox button, #save, #cancel {
+    width: 200px;
+    border-radius: 30px;
+    margin-top: 10px;
+}
+
+
+.inputBox input {
+    position: relative;
+    width: 100%;
+    height: 40px;
+    border-radius: 30px;
+    outline: none;
+    border: none;
+    background: white;
+    margin-right: 10px;
+    font-size: 1.2em;
+    color: #000;
+}
+
+#container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0 auto;
+    overflow-y: auto;
+    height: 100%;
+}
+
+#container section{
+    width: 23%;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+#container section li{
+    list-style: none;
+    text-align: center;
+    margin-bottom: 5px;
+    position: relative;
+}
+
+.tasksSection{
+    height: 60vh;
+    width: 100%;
+    padding-left: 0rem;
+}
+
+.tasksSection li {
+    position: relative;
+    padding: 5px;
+    margin: 5px 0;
+    border: 1px solid #ddd;
+    background-color: #f8f9fa;
+    border-radius: 20px; /* Match the border radius */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column; /* Match the flex direction */
+}
+
+#container .tasksSection li .tasksTop {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.tasksSection li .tasksProgress {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#container .tasksSection li .tasksProgress .process {
+    position: relative;
+    padding: 5px 10px;
+    background: #f1f3ff;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 0 1px 0 0;
+}
+
+/* School process styles */
+#container .tasksSection li .tasksProgress .process.school-color h2 {
+    color: #9f97dd;
+}
+
+/* Work process styles */
+#container .tasksSection li .tasksProgress .process.work-color h2 {
+    color: #dcafaf;
+}
+
+/* Personal process styles */
+#container .tasksSection li .tasksProgress .process.personal-color h2 {
+    color: #c397dd;
+}
+
+/* Life process styles */
+#container .tasksSection li .tasksProgress .process.life-color h2 {
+    color: #daafdc;
+}
+
+/* Common styles for process */
+#container .tasksSection li .tasksProgress .process h2 {
+    white-space: nowrap;
+    font-size: 0.8em;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    margin: 0 0 0 0;
+    padding: 0px;
+    cursor: pointer;
+}
+
+
+#container .tasksSection li .tasksProgress .priority {
+    position: relative;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin: 0 0 0 10px;
+}
+
+.tasksSection li .tasksProgress .priority::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+}
+
+#container .tasksSection li .tasksProgress .priority h2 {
+    white-space: nowrap;
+    font-size: 0.8em;
+    font-weight: 500;
+    margin-bottom: 0rem;
+    margin: 0 0 0 0;
+    padding: 0px;
+}
+
+/* High priority styles */
+#container .tasksSection li .tasksProgress .priority.high-priority h2 {
+    color: #dc0000;
+}
+
+#container .tasksSection li .tasksProgress .priority.high-priority::before {
+    background: #dc0000;
+    box-shadow: 0 0 2px #dc0000, 0 0 5px #dc000077;
+}
+
+/* Medium priority styles */
+#container .tasksSection li .tasksProgress .priority.medium-priority h2 {
+    color: #fd8c00;
+}
+
+#container .tasksSection li .tasksProgress .priority.medium-priority::before {
+    background: #fd8c00;
+    box-shadow: 0 0 2px #fd8c00, 0 0 5px #fd8c0077;
+}
+
+/* Low priority styles */
+#container .tasksSection li .tasksProgress .priority.low-priority h2 {
+    color: #fdc500;
+}
+
+#container .tasksSection li .tasksProgress .priority.low-priority::before {
+    background: #fdc500;
+    box-shadow: 0 0 2px #fdc500, 0 0 5px #fdc500;
+}
+
+#container .tasksSection li .tasks {
+    margin: 0 0 0 0;
+    position: relative;
+    width: 100%;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: row;
+}
+
+#container .tasksSection li .tasks input[type="date"] {
+    color: #2a425b;
+    margin: 0 0 0 0px;
+    font-size: 0.8em;
+    width: 60px;
+}
+
+#container .tasksSection li .tasks h2 {
+    color: #999;
+    font-size: 0.8em;
+    padding: 2px;
+    margin: 0 0 0 7px;
+}
+
+.tasksSection li .task .line {
+    position: relative;
+    width: 100%;
+    height: 5px;
+    background: rgba(0, 0, 0, .1);
+    border-radius: 50px;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.tasksSection li .task .line::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: calc(100% - 25%);
+    height: 100%;
+    background: #6577ff;
+    z-index: 1;
+    border-radius: 50px;
+}
+
+.tasksSection li .due {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    cursor: pointer;
+}
+
+.tasksSection li .due h2 {
+    padding: 0px 10px;
+    border: 2px solid #f5b5f5;
+    border-radius: 5px;
+    font-size: 1.1em;
+    color: #f5b5f5;
+}
+
+#container section h2{
+    font-size: 1.1em;
+    text-align: center;
+    padding: 5px;
+    margin: 0 0 5px 0;
+}
+
+.toDo,
+#toDo li{
+    border: .1px solid;
+    border-radius: 30px;
+    background-color: #8E7AB5;
+    color: #fff;
+}
+
+
+.inProgress,
+#inProgress li{
+    border: .1px solid;
+    border-radius: 30px;
+    background-color: #B784B7;
+    color: #fff;
+}
+
+.inReview,
+#inReview li{
+    border: .1px solid;
+    border-radius: 30px;
+    background-color: #E493B3;
+    color: #fff;
+}
+
+.completed,
+#completed li {
+    border: .1px solid;
+    border-radius: 30px;
+    background-color: #EEA5A6;
+    color: #fff;
+}
+
+/* list options buttons */
+
+#container section li p{
+    display: flex;
+    align-items: center;
+}
+
+#container section li p span{
+    margin-right: 20%;
+}
+
+#container section .listOptionsWrapper{
+    width: 100%;
+    background-color: #fff;
+    position: absolute;
+    left: 0;
+    top: 100%;
+    border: 0.5px solid;
+    display: none;
+}
+
+#container section .listOptionsWrapper button{
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 10px;
+    color: #333;
+}
+
+#container section .listOptionsWrapper button:first-child{
+    border-bottom: 0.5px solid;
+}
+
+/* list options border colors */
+
+#toDo .listOptionsWrapper,
+#toDo .listOptionsWrapper button{
+    background-color: #8E7AB5;
+}
+
+#inProgress .listOptionsWrapper,
+#inProgress .listOptionsWrapper button{
+    background-color: #B784B7;
+}
+
+#inReview .listOptionsWrapper,
+#inReview .listOptionsWrapper button{
+    background-color: #E493B3;
+}
+
+#completed .listOptionsWrapper,
+#completed .listOptionsWrapper button{
+    background-color: #EEA5A6;
+}
+
+
 /* projectCard start */
+.container .right .tasksCard,
 .container .right main .projectCard {
     position: relative;
     width: 100%;
     height: 100%;
     background-color: rgba(255, 255, 255, 1);
     backdrop-filter: blur(5px);
-    border-radius: 20px;
+    border-radius: 25px;
     box-shadow: rgba(255, 255, 255, 0.5) 35px 35px 68px 0px,
         inset rgba(255, 255, 255, 0.6) -8px -8px 16px 0px,
         inset rgb(255, 255, 255) 0px 11px 28px 0px;
@@ -453,15 +841,20 @@ body {
     grid-row: 1 / 4;
 }
 
+.container .right .tasksCard {
+    padding: 10px;
+}
+
+.container .right .tasksCard .tasksTop,
 .container .right main .projectCard .projectTop {
     position: relative;
     width: 100%;
     height: 40px;
-    display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
+.container .right .tasksCard .tasksTop h2,
 .container .right main .projectCard .projectTop h2 {
     color: #000;
     font-size: 1.2em;
@@ -470,6 +863,7 @@ body {
     cursor: pointer;
 }
 
+.container .right .tasksCard .tasksTop h2 span,
 .container .right main .projectCard .projectTop h2 span {
     color: #999;
     font-size: 0.8em;
@@ -489,6 +883,7 @@ body {
     font-weight: 700;
 }
 
+.container .right .tasksCard .tasksProgress,
 .container .right main .projectCard .projectProgress {
     position: relative;
     width: 100%;
@@ -498,6 +893,7 @@ body {
     align-items: center;
 }
 
+.container .right .tasksCard .tasksProgress .process,
 .container .right main .projectCard .projectProgress .process {
     position: relative;
     padding: 5px 10px;
@@ -506,6 +902,7 @@ body {
     cursor: pointer;
 }
 
+.container .right .tasksCard .tasksProgress .process h2,
 .container .right main .projectCard .projectProgress .process h2 {
     color: #8389f9;
     white-space: nowrap;
@@ -515,12 +912,14 @@ body {
     margin-bottom: 0rem;
 }
 
+.container .right .tasksCard .tasksProgress .priority,
 .container .right main .projectCard .projectProgress .priority {
     position: relative;
     padding: 5px 10px;
     cursor: pointer;
 }
 
+.container .right .tasksCard .tasksProgress .priority::before,
 .container .right main .projectCard .projectProgress .priority::before {
     content: '';
     position: absolute;
@@ -535,6 +934,7 @@ body {
         0 0 5px #ff000077;
 }
 
+.container .right .tasksCard .tasksProgress .priority h2,
 .container .right main .projectCard .projectProgress .priority h2 {
     color: #ff0000;
     white-space: nowrap;
@@ -594,6 +994,7 @@ body {
     font-size: 1.2em;
 }
 
+.container .right .tasksCard .tasks,
 .container .right main .projectCard .task {
     position: relative;
     width: 100%;
@@ -601,21 +1002,27 @@ body {
     justify-content: space-between;
     align-items: flex-start;
     flex-direction: column;
+}
+
+.container .right .tasksCard .tasks,
+.container .right main .projectCard .task {
     margin: 10px 0;
 }
 
-.container .right main .projectCard .task .material-symbols-outlined {
+.container .right main .projectCard .tasks .material-symbols-outlined {
     color: #999;
     font-size: 1.4em;
     margin-right: 10px;
 }
 
+.container .right .tasksCard .tasks h2,
+.container .right main .projectCard .tasks h2,
 .container .right main .projectCard .task h2 {
     color: #999;
     font-size: 1em;
 }
 
-.container .right main .projectCard .task .line {
+.container .right .projectCard .task .line {
     position: relative;
     width: 100%;
     height: 5px;
