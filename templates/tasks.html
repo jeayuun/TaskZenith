@@ -37,7 +37,7 @@
     <div class="inputBox">
         <input type="text" placeholder="Enter a task" id="userInput">
         <button type="submit">Add Task</button>
-        <button style="background: linear-gradient(145deg, #d488ea, #8389f9);">Sort Tasks</button>
+        <button id="sortTasksButton" style="background: linear-gradient(145deg, #d488ea, #8389f9);">Sort Tasks</button>
     </div>
 </form>
 <div class="tasksContainer">
@@ -61,7 +61,6 @@
     </section>
 </div>
 <!-- Tasks: To Do end -->
-
 
 <script>
     var storage = [];
@@ -157,7 +156,8 @@
                 value: userInput,
                 parent: 'toDo',
                 priority: 'Low Priority',
-                process: 'School'
+                process: 'School',
+                dueDate: ''
             };
             createElement(objData);
             setItemOnLocalStorage('tasks', JSON.stringify(storage));
@@ -175,7 +175,8 @@
             value: objData.value,
             parent: objData.parent,
             priority: objData.priority || 'Low Priority',
-            process: objData.process || 'School'
+            process: objData.process || 'School',
+            dueDate: objData.dueDate || ''
         };
         var list = document.createElement('li');
         document.getElementById(obj.parent).appendChild(list);
@@ -253,7 +254,6 @@
         setItemOnLocalStorage('tasks', JSON.stringify(storage));
     }
 
-
     function createListChildren(list, objData) {
         // Create task structure based on provided HTML
         var taskCard = document.createElement('div');
@@ -289,7 +289,19 @@
         // Due Date
         var tasks = document.createElement('div');
         tasks.className = 'tasks';
-        tasks.innerHTML = '<h2>Due: 7 July 2024</h2>';
+        var dueDateInput = document.createElement('input');
+        dueDateInput.type = 'date';
+        dueDateInput.style.width = 'auto';
+        dueDateInput.style.display = 'inline';
+        dueDateInput.value = objData.dueDate;
+        dueDateInput.addEventListener('change', function() {
+            var task = storage.find(item => item.id === objData.id);
+            task.dueDate = dueDateInput.value;
+            setItemOnLocalStorage('tasks', JSON.stringify(storage));
+        });
+
+        tasks.innerHTML = '<h2>Due: </h2>';
+        tasks.appendChild(dueDateInput);
 
         taskCard.appendChild(tasksProgress);
         taskCard.appendChild(tasksTop);
@@ -297,7 +309,6 @@
 
         list.appendChild(taskCard);
     }
-
 
     // Delete all tasks button click event
     document.getElementById('deleteAllTasksBtn').addEventListener('click', function() {
@@ -312,7 +323,6 @@
         }
     });
 
-
     // Functions to set and get elements from local storage
     function setItemOnLocalStorage(key, value) {
         localStorage.setItem(key, value);
@@ -321,6 +331,32 @@
     function getItemOnLocalStorage(key) {
         return localStorage.getItem(key);
     }
+
+    // Sort tasks button click event
+    document.getElementById('sortTasksButton').addEventListener('click', function() {
+        // Sort tasks in storage array
+        storage.sort(function(a, b) {
+            var priorityOrder = {'High Priority': 1, 'Medium Priority': 2, 'Low Priority': 3};
+            if (a.priority !== b.priority) {
+                return priorityOrder[a.priority] - priorityOrder[b.priority];
+            } else {
+                return new Date(a.dueDate) - new Date(b.dueDate);
+            }
+        });
+
+        // Clear current tasks in DOM
+        document.querySelectorAll('.tasksSection').forEach(function(section) {
+            section.innerHTML = '';
+        });
+
+        // Re-create elements based on sorted tasks
+        storage.forEach(function(task) {
+            createElement(task);
+        });
+
+        // Update local storage
+        setItemOnLocalStorage('tasks', JSON.stringify(storage));
+    });
 
     // Drag and drop functions
     function allowDrop(event) {
@@ -349,5 +385,4 @@
         }
     });
 </script>
-
 {% endblock %}
