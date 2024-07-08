@@ -523,11 +523,34 @@ body {
     text-align: center;
 }
 
+.container .right .goalsContainer{
+    margin: 0 auto;
+    text-align: center;
+    width: 80%;
+    overflow-y: auto;
+    height: 100%;
+}
+
+.container .right .goalsContainer ul{
+    margin-right: .5rem;
+}
+
+.container .right .goalsContainer #goalList li,
 #container section li{
-    list-style: none;
+    list-style-type: none;
     text-align: center;
     margin-bottom: 5px;
     position: relative;
+}
+
+
+.container .right .goalsContainer #goalList li {
+    margin-bottom: 15px;
+}
+
+.container .right .goalsContainer #goalList{
+    align-items: center;
+    padding-left: 0rem;
 }
 
 .tasksSection{
@@ -632,31 +655,45 @@ body {
     padding: 0px;
 }
 
+.container .right .goalsCard .tasksProgress .process.completed-color{
+    background: #e0f2e1;
+}
+
+.container .right .goalsCard .tasksProgress .process.completed-color h2 {
+    color: #60a34c;
+}
+
 /* High priority styles */
+.container .goalsContainer #goalList li .goalsCard .tasksProgress .priority.high-priority h2,
 #container .tasksSection li .tasksProgress .priority.high-priority h2 {
     color: #dc0000;
 }
 
+.container .goalsContainer #goalList  li .goalsCard .tasksProgress .priority.high-priority::before,
 #container .tasksSection li .tasksProgress .priority.high-priority::before {
     background: #dc0000;
     box-shadow: 0 0 2px #dc0000, 0 0 5px #dc000077;
 }
 
 /* Medium priority styles */
+.container .goalsContainer #goalList li .goalsCard .tasksProgress .priority.medium-priority h2,
 #container .tasksSection li .tasksProgress .priority.medium-priority h2 {
     color: #fd8c00;
 }
 
+.container .goalsContainer #goalList  li .goalsCard .tasksProgress .priority.medium-priority::before,
 #container .tasksSection li .tasksProgress .priority.medium-priority::before {
     background: #fd8c00;
     box-shadow: 0 0 2px #fd8c00, 0 0 5px #fd8c0077;
 }
 
 /* Low priority styles */
+.container .goalsContainer #goalList li .goalsCard .tasksProgress .priority.low-priority h2,
 #container .tasksSection li .tasksProgress .priority.low-priority h2 {
     color: #fdc500;
 }
 
+.container .goalsContainer #goalList li .tasksProgress .priority.low-priority::before,
 #container .tasksSection li .tasksProgress .priority.low-priority::before {
     background: #fdc500;
     box-shadow: 0 0 2px #fdc500, 0 0 5px #fdc500;
@@ -669,6 +706,10 @@ body {
     justify-content: space-between;
     align-items: flex-start;
     flex-direction: row;
+}
+
+.container .right .goalsCard .tasks input[type="date"] {
+    color: #2a425b;
 }
 
 #container .tasksSection li .tasks input[type="date"] {
@@ -729,6 +770,7 @@ body {
     text-align: center;
     padding: 5px;
     margin: 0 0 5px 0;
+    border: 0px;
 }
 
 .toDo,
@@ -823,6 +865,7 @@ body {
 
 /* projectCard start */
 .container .right .tasksCard,
+.container .right .goalsCard,
 .container .right main .projectCard {
     position: relative;
     width: 100%;
@@ -845,7 +888,11 @@ body {
     padding: 10px;
 }
 
-.container .right .tasksCard .tasksTop,
+.container .right .goalsCard {
+    padding: 20px;
+}
+
+.container .right .goalsCard .tasksTop,
 .container .right main .projectCard .projectTop {
     position: relative;
     width: 100%;
@@ -855,6 +902,7 @@ body {
 }
 
 .container .right .tasksCard .tasksTop h2,
+.container .right .goalsCard .tasksTop h2,
 .container .right main .projectCard .projectTop h2 {
     color: #000;
     font-size: 1.2em;
@@ -863,7 +911,7 @@ body {
     cursor: pointer;
 }
 
-.container .right .tasksCard .tasksTop h2 span,
+.container .right .goalsCard .tasksTop h2 span,
 .container .right main .projectCard .projectTop h2 span {
     color: #999;
     font-size: 0.8em;
@@ -883,7 +931,7 @@ body {
     font-weight: 700;
 }
 
-.container .right .tasksCard .tasksProgress,
+.container .right .goalsCard .tasksProgress,
 .container .right main .projectCard .projectProgress {
     position: relative;
     width: 100%;
@@ -893,7 +941,7 @@ body {
     align-items: center;
 }
 
-.container .right .tasksCard .tasksProgress .process,
+.container .right .goalsCard .tasksProgress .process,
 .container .right main .projectCard .projectProgress .process {
     position: relative;
     padding: 5px 10px;
@@ -902,7 +950,7 @@ body {
     cursor: pointer;
 }
 
-.container .right .tasksCard .tasksProgress .process h2,
+.container .right .goalsCard .tasksProgress .process h2,
 .container .right main .projectCard .projectProgress .process h2 {
     color: #8389f9;
     white-space: nowrap;
@@ -912,14 +960,14 @@ body {
     margin-bottom: 0rem;
 }
 
-.container .right .tasksCard .tasksProgress .priority,
+.container .right .goalsCard .tasksProgress .priority,
 .container .right main .projectCard .projectProgress .priority {
     position: relative;
     padding: 5px 10px;
     cursor: pointer;
 }
 
-.container .right .tasksCard .tasksProgress .priority::before,
+.container .right .goalsCard .tasksProgress .priority::before,
 .container .right main .projectCard .projectProgress .priority::before {
     content: '';
     position: absolute;
@@ -934,7 +982,7 @@ body {
         0 0 5px #ff000077;
 }
 
-.container .right .tasksCard .tasksProgress .priority h2,
+.container .right .goalsCard .tasksProgress .priority h2,
 .container .right main .projectCard .projectProgress .priority h2 {
     color: #ff0000;
     white-space: nowrap;
@@ -994,7 +1042,7 @@ body {
     font-size: 1.2em;
 }
 
-.container .right .tasksCard .tasks,
+.container .right .goalsCard .tasks,
 .container .right main .projectCard .task {
     position: relative;
     width: 100%;
@@ -1004,9 +1052,17 @@ body {
     flex-direction: column;
 }
 
-.container .right .tasksCard .tasks,
+.container .right .goalsCard .tasks {
+    margin: 0 0 0 0;
+    flex-direction: row;
+}
 .container .right main .projectCard .task {
     margin: 10px 0;
+}
+
+.container .right .goalsCard .tasks input {
+    margin: 0px auto;
+    margin-right: 75%;
 }
 
 .container .right main .projectCard .tasks .material-symbols-outlined {
@@ -1015,7 +1071,7 @@ body {
     margin-right: 10px;
 }
 
-.container .right .tasksCard .tasks h2,
+.container .right .goalsCard .tasks h2,
 .container .right main .projectCard .tasks h2,
 .container .right main .projectCard .task h2 {
     color: #999;
