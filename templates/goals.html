@@ -1,0 +1,290 @@
+{% extends "index.html" %}
+
+{% block title %}
+    Goals
+{% endblock %}
+
+{% block right_top_title %}
+    Goals
+{% endblock %}
+
+{% block content %}
+    <div class="logo">
+        <h2>
+            <img src="https://99gifshop.neocities.org/items/11/tulips_blue_lg_clr.gif" title="TaskZenith" width="30%">
+            TaskZenith
+        </h2>
+        <div class="close">
+            <span class="material-symbols-outlined">close</span>
+        </div>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="/" id="dashboard-link"><span class="material-symbols-outlined">dashboard</span><span class="title">Dashboard</span></a></li>
+            <li><a href="/tasks" id="tasks-link"><span class="material-symbols-outlined">check_box</span><span class="title">Tasks</span></a></li>
+            <li><a href="/goals" id="goals-link" class="fill"><span class="material-symbols-outlined full">flag</span><span class="title-full">Goals</span></a></li>
+            <li><a href="/schedule" id="schedule-link"><span class="material-symbols-outlined">calendar_month</span><span class="title">Schedule</span></a></li>
+            <li><a href="/projects" id="projects-link"><span class="material-symbols-outlined">inventory_2</span><span class="title">Projects</span></a></li>
+            <li><a href="/profile" id="profile-link"><span class="material-symbols-outlined">group</span><span class="title">My Profile</span></a></li>
+        </ul>
+    </nav>
+{% endblock %}
+
+{% block additional_content %}
+<form autocomplete="off" id="goalForm">
+    <div class="inputBox">
+        <input type="text" placeholder="What's your goal?" id="userInput">
+        <button type="submit">Add Goal</button>
+        <button id="sortGoalsButton" style="background: linear-gradient(145deg, #d488ea, #8389f9);">Sort Goals</button>
+        <button id="deleteAllGoalsBtn">Delete Goals</button>
+    </div>
+</form>
+<div class="goalsContainer">
+    <ul id="goalList"></ul>
+</div>
+
+<script>
+    var goalStorage = [];
+    var goalId = 0;
+
+    // Self-invoked function to get elements from local storage
+    (function () {
+        if (getItemOnLocalStorage('goals')) {
+            var parsed = JSON.parse(getItemOnLocalStorage('goals'));
+            var max = 0;
+            for (var i = 0; i < parsed.length; i++) {
+                createGoalElement(parsed[i], false); // Append goals to the list
+                if (parsed[i].id > max) {
+                    max = parsed[i].id;
+                }
+            }
+            goalStorage = parsed;
+            goalId = max;
+        }
+    })();
+
+    // Submit button function
+    document.getElementById('goalForm').addEventListener('submit', function (e) {
+        e.preventDefault(); // Prevent form submission
+        var userInput = document.getElementById('userInput').value;
+
+        if (e.submitter && e.submitter.innerText === "Add Goal") {
+            if (userInput) {
+                var goalData = {
+                    id: ++goalId,
+                    value: userInput,
+                    priority: 'Low Priority',
+                    process: 'In Progress',
+                    dueDate: ''
+                };
+                createGoalElement(goalData, true);
+                setItemOnLocalStorage('goals', JSON.stringify(goalStorage));
+                document.getElementById('userInput').value = ''; // Clear the input field
+            } else {
+                alert("Please enter the goal.");
+            }
+        }
+    });
+
+    // Functions to create a new goal element
+    function createGoalElement(goalData, addToStorage) {
+        console.log('Creating goal element:', goalData); // Debugging
+        var obj = {
+            id: goalData.id,
+            value: goalData.value,
+            priority: goalData.priority || 'Low Priority',
+            process: goalData.process || 'In Progress',
+            processClass: goalData.processClass || 'in-progress-color',
+            dueDate: goalData.dueDate || ''
+        };
+        var listItem = document.createElement('li');
+        document.getElementById('goalList').appendChild(listItem);
+        createGoalChildren(listItem, obj);
+        listItem.id = goalData.id;
+        listItem.setAttribute('draggable', true);
+        listItem.addEventListener('dragstart', function (event) {
+            event.dataTransfer.setData('text', event.target.id);
+        });
+        if (addToStorage) {
+            goalStorage.push(obj);
+        }
+    }
+
+    function togglePriority(priorityElement, goalId) {
+        var currentPriority = priorityElement.innerText.trim();
+        var newPriority;
+
+        switch (currentPriority) {
+            case 'Medium Priority':
+                newPriority = 'High Priority';
+                priorityElement.classList.remove('medium-priority');
+                priorityElement.classList.add('high-priority');
+                break;
+            case 'Low Priority':
+                newPriority = 'Medium Priority';
+                priorityElement.classList.remove('low-priority');
+                priorityElement.classList.add('medium-priority');
+                break;
+            case 'High Priority':
+                newPriority = 'Low Priority';
+                priorityElement.classList.remove('high-priority');
+                priorityElement.classList.add('low-priority');
+                break;
+        }
+
+        priorityElement.innerHTML = `<h2>${newPriority}</h2>`;
+
+        // Update the priority in storage
+        var goal = goalStorage.find(item => item.id === goalId);
+        goal.priority = newPriority;
+        setItemOnLocalStorage('goals', JSON.stringify(goalStorage));
+    }
+
+    function toggleProcess(processElement, goalId) {
+        var currentProcess = processElement.innerText.trim();
+        var newProcess;
+        var newClass;
+
+        switch (currentProcess) {
+            case 'In Progress':
+                newProcess = 'Completed';
+                newClass = 'completed-color';
+                break;
+            case 'Completed':
+                newProcess = 'In Progress';
+                newClass = 'in-progress-color';
+                break;
+        }
+
+        processElement.innerHTML = `<h2>${newProcess}</h2>`;
+        processElement.classList.remove('in-progress-color', 'completed-color');
+        processElement.classList.add(newClass);
+
+        // Update the process and class in storage
+        var goal = goalStorage.find(item => item.id === goalId);
+        goal.process = newProcess;
+        goal.processClass = newClass;
+        setItemOnLocalStorage('goals', JSON.stringify(goalStorage));
+    }
+
+    function createGoalChildren(listItem, goalData) {
+        var goalCard = document.createElement('div');
+        goalCard.className = 'goalsCard';
+        goalCard.draggable = true;
+
+        var goalsProgress = document.createElement('div');
+        goalsProgress.className = 'tasksProgress';
+
+        // Process
+        var process = document.createElement('div');
+        process.className = `process ${goalData.processClass}`;
+        process.innerHTML = `<h2>${goalData.process}</h2>`;
+        process.addEventListener('click', function() {
+            toggleProcess(process, goalData.id);
+        });
+
+        // Priority
+        var priority = document.createElement('div');
+        priority.className = `priority ${goalData.priority.replace(' ', '-').toLowerCase()}`;
+        priority.innerHTML = `<h2>${goalData.priority}</h2>`;
+        priority.addEventListener('click', function() {
+            togglePriority(priority, goalData.id);
+        });
+
+        goalsProgress.appendChild(process);
+        goalsProgress.appendChild(priority);
+
+        var goalsTop = document.createElement('div');
+        goalsTop.className = 'tasksTop';
+        goalsTop.innerHTML = `<h2>${goalData.value}<br></h2>`;
+
+        // Due Date
+        var goals = document.createElement('div');
+        goals.className = 'tasks';
+        var dueDateInput = document.createElement('input');
+        dueDateInput.type = 'date';
+        dueDateInput.style.width = 'auto';
+        dueDateInput.style.display = 'inline';
+        dueDateInput.value = goalData.dueDate;
+        dueDateInput.addEventListener('change', function() {
+            var goal = goalStorage.find(item => item.id === goalData.id);
+            goal.dueDate = dueDateInput.value;
+            setItemOnLocalStorage('goals', JSON.stringify(goalStorage));
+        });
+
+        goals.innerHTML = '<h2>Due: </h2>';
+        goals.appendChild(dueDateInput);
+
+        goalCard.appendChild(goalsProgress);
+        goalCard.appendChild(goalsTop);
+        goalCard.appendChild(goals);
+
+        listItem.appendChild(goalCard);
+    }
+
+        // Comparison function to sort tasks based on priority and due date
+        function compareTasks(taskA, taskB) {
+        const priorityOrder = {"High Priority": 1, "Medium Priority": 2, "Low Priority": 3};
+
+        if (taskA.process === 'Completed' && taskB.process !== 'Completed') {
+            return false;
+        } else if (taskA.process !== 'Completed' && taskB.process === 'Completed') {
+            return true;
+        }
+
+        if (priorityOrder[taskA.priority] !== priorityOrder[taskB.priority]) {
+            return priorityOrder[taskA.priority] < priorityOrder[taskB.priority];
+        } else {
+            return new Date(taskA.dueDate) < new Date(taskB.dueDate);
+        }
+    }
+
+    // Selection Sort algorithm
+    function selectionSort(array, compare) {
+        const n = array.length;
+        for (let i = 0; i < n - 1; i++) {
+            let minIndex = i;
+            for (let j = i + 1; j < n; j++) {
+                if (compare(array[j], array[minIndex])) {
+                    minIndex = j;
+                }
+            }
+            if (minIndex !== i) {
+                [array[i], array[minIndex]] = [array[minIndex], array[i]];
+            }
+        }
+    }
+
+    // Sort Goals button click event
+    document.getElementById('sortGoalsButton').addEventListener('click', function() {
+        selectionSort(goalStorage, compareTasks);
+        setItemOnLocalStorage('goals', JSON.stringify(goalStorage));
+
+        // Clear and re-render the goal list
+        document.getElementById('goalList').innerHTML = '';
+        for (let goal of goalStorage) {
+            createGoalElement(goal, false);
+        }
+    });
+
+    // Delete all goals button click event
+    document.getElementById('deleteAllGoalsBtn').addEventListener('click', function() {
+        var confirmation = confirm('Do you want to delete all goals?');
+        if (confirmation) {
+            // Clear storage and DOM
+            goalStorage = [];
+            localStorage.removeItem('goals');
+            document.getElementById('goalList').innerHTML = ''; // Clear the goal list
+        }
+    });
+
+    // Functions to set and get elements from local storage
+    function setItemOnLocalStorage(name, item) {
+        localStorage.setItem(name, item);
+    }
+
+    function getItemOnLocalStorage(name) {
+        return localStorage.getItem(name);
+    }
+</script>
+{% endblock %}
