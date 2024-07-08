@@ -1,14 +1,1071 @@
 {% extends "index.html" %}
 
 {% block title %}
-    Schedule 
+    Schedule
 {% endblock %}
 
 {% block right_top_title %}
-Schedule Overview
+    Schedule
 {% endblock %}
 
 {% block content %}
-<h2>Schedule Overview</h2>
-<p>Your schedule and upcoming events.</p>
+    <div class="logo">
+        <h2>
+            <img src="https://99gifshop.neocities.org/items/11/tulips_blue_lg_clr.gif" title="TaskZenith" width="30%">
+            TaskZenith
+        </h2>
+        <div class="close">
+            <span class="material-symbols-outlined">close</span>
+        </div>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="/" id="dashboard-link"><span class="material-symbols-outlined">dashboard</span><span class="title">Dashboard</span></a></li>
+            <li><a href="/tasks" id="tasks-link"><span class="material-symbols-outlined">check_box</span><span class="title">Tasks</span></a></li>
+            <li><a href="/goals" id="goals-link"><span class="material-symbols-outlined">flag</span><span class="title">Goals</span></a></li>
+            <li><a href="/schedule" id="schedule-link" class="fill"><span class="material-symbols-outlined full">calendar_month</span><span class="title-full">Schedule</span></a></li>
+            <li><a href="/projects" id="projects-link"><span class="material-symbols-outlined">inventory_2</span><span class="title">Projects</span></a></li>
+            <li><a href="/profile" id="profile-link"><span class="material-symbols-outlined">group</span><span class="title">My Profile</span></a></li>
+        </ul>
+    </nav>
+{% endblock %}
+
+{% block additional_content %}
+<div class="containers">
+    <div id="left">
+        <div class="calendar">
+          <div class="month">
+            <i class="fa fa-angle-left prev" style="color: #7b6196;"></i>
+            <div class="date" style="color: #966161;">december 2015</div>
+            <i class="fa fa-angle-right next"></i>
+          </div>
+          <div class="weekdays" style="color: #7b6196;">
+            <div>Sun</div>
+            <div>Mon</div>
+            <div>Tue</div>
+            <div>Wed</div>
+            <div>Thu</div>
+            <div>Fri</div>
+            <div>Sat</div>
+          </div>
+          <div class="days"></div>
+          <div class="goto-today">
+            <div class="goto">
+              <button class="goto-btn" style="margin: 0px auto; text-align: right;">Visit </button>
+              <input type="text" placeholder="mm/yyyy" class="date-input" />
+            </div>
+            <button class="today-btn" style="margin: 0px auto;">Today</button>
+          </div>
+        </div>
+      </div>
+      <div id="right">
+        <div class="today-date">
+          <div class="event-day">wed</div>
+          <div class="event-date">8th July 2024</div>
+        </div>
+        <div class="events"></div>
+        <div class="add-event-wrapper">
+          <div class="add-event-header">
+            <div class="title">Add Event</div>
+            <i class="fa fa-times closes" style="color: #7b6196;"></i>
+          </div>
+          <div class="add-event-body">
+            <div class="add-event-input">
+              <input type="text" placeholder="Event Name" class="event-name" />
+            </div>
+            <div class="add-event-input">
+              <input
+                type="text"
+                placeholder="Start Time"
+                class="event-time-from"
+              />
+            </div>
+            <div class="add-event-input">
+              <input
+                type="text"
+                placeholder="End Time"
+                class="event-time-to"
+              />
+            </div>
+          </div>
+          <div class="add-event-footer">
+            <button class="add-event-btn add" style="color: #fff; background: #573b8a;">Add Event</button>
+          </div>
+        </div>
+      </div>
+      <button class="add-event">
+        <i class="fa fa-plus"></i>
+      </button>
+</div>
+
+
+
+<style>
+    .containers {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .add {
+        margin-top: 0px;
+    }
+
+    #left {
+      width: 54%;
+      padding: 20px;
+      margin-left: auto;
+    }
+
+    .calendar {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      color: #878895;
+      border-radius: 30px;
+      background-color: #fff;
+    }
+
+    .calendar::before {
+      height: 94%;
+      left: calc(100% + 12px);
+      background-color: rgb(165 147 178);
+    }
+
+    .calendar .month {
+      width: 100%;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 50px;
+      font-size: 1.2rem;
+      font-weight: 500;
+      text-transform: capitalize;
+    }
+
+    .calendar .month .prev,
+    .calendar .month .next {
+      cursor: pointer;
+    }
+
+    .calendar .month .prev:hover,
+    .calendar .month .next:hover {
+      color: #966161;
+    }
+
+    .calendar .weekdays {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      font-size: 1rem;
+      font-weight: 500;
+      text-transform: capitalize;
+    }
+
+    .weekdays div {
+      width: 14.28%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .calendar .days {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      padding: 0 20px;
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+
+    .calendar .days .day {
+      width: 14.28%;
+      height: 65px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: 1px solid #f5f5f5;
+    }
+
+    .calendar .days .day:nth-child(7n + 1) {
+      border-left: 2px solid #f5f5f5;
+    }
+
+    .calendar .days .day:nth-child(7n) {
+      border-right: 2px solid #f5f5f5;
+    }
+
+    .calendar .days .day:nth-child(-n + 7) {
+      border-top: 2px solid #f5f5f5;
+    }
+
+    .calendar .days .day:nth-child(n + 29) {
+      border-bottom: 2px solid #f5f5f5;
+    }
+
+    .calendar .days .day:not(.active, .prev-date, .next-date):hover {
+      color: #ab5683;
+      background-color: #fff9fc;
+    }
+
+    .calendar .days .prev-date,
+    .calendar .days .next-date {
+      color: #b3b3b3;
+    }
+
+    .calendar .days .today,
+    .calendar .days .active {
+      position: relative;
+      font-size: 1.5rem;
+      color: #ab5683;
+      background-color: #ffeaf5;
+    }
+
+    .calendar .days .today.event,
+    .calendar .days .today {
+        color: #ffeaf5;
+        background-color: #ab5683;
+    }
+
+    .calendar .days .active::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .calendar .days .event {
+      position: relative;
+      background-color: #ffeaf5;
+      color: #ab5683;
+    }
+
+    .calendar .days .event::after {
+      content: "";
+      position: absolute;
+      bottom: 10%;
+      left: 50%;
+      width: 75%;
+      height: 6px;
+      border-radius: 30px;
+      transform: translateX(-50%);
+    }
+
+    .calendar .days .day:hover.event::after {
+      background-color: #fff;
+    }
+
+    .calendar .days .active.event::after {
+      background-color: #fff;
+      bottom: 20%;
+    }
+
+    .calendar .days .active.event {
+      padding-bottom: 10px;
+    }
+
+    .calendar .goto-today {
+      width: 100%;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 5px;
+      padding: 0 20px;
+      margin-bottom: 20px;
+    }
+
+    .calendar .goto-today button:hover {
+        color: #ab5683;
+    }
+
+    .calendar .goto-today .goto {
+      display: flex;
+      align-items: center;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .calendar .goto-today .goto input {
+      width: 100%;
+      height: 30px;
+      outline: none;
+      border: none;
+      border-radius: 5px;
+      padding: 0 20px;
+      border-radius: 5px;
+    }
+
+    .calendar .goto-today button {
+      padding: 5px 10px;
+      border-radius: 5px;
+      background-color: transparent;
+      cursor: pointer;
+      color: #a58e8e;
+    }
+
+    .calendar .goto-today .goto button {
+      border: none;
+      border-radius: 0;
+    }
+
+    .containers #right {
+      position: relative;
+      width: 40%;
+      min-height: 100%;
+      padding: 20px 0;
+      margin-right: 50px;
+    }
+
+    #right .today-date {
+      width: 100%;
+      height: 50px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: center;
+      padding: 0 40px;
+      padding-left: 110px;
+      margin-top: 30px;
+      margin-bottom: 20px;
+      text-transform: capitalize;
+    }
+
+    #right .today-date .event-date,
+    #right .today-date .event-day {
+      font-weight: 500;
+      border-radius: 30px;
+      background-color: #8E7AB5;
+      color: #fff;
+      padding: 5px;
+      width: 30%;
+      text-align: center;
+    }
+
+    #right .today-date .event-date{
+      width: 40%;
+    }
+
+    .events {
+      width: 100%;
+      height: 100%;
+      max-height: 600px;
+      display: flex;
+      flex-direction: column;
+      padding-left: 4px;
+    }
+
+    .events .event {
+      position: relative;
+      min-height: 70px;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      gap: 5px;
+      padding: 0 20px;
+      padding-left: 50px;
+      color: black;
+      background: white;
+      cursor: pointer;
+      border-radius: 30px;
+      margin-bottom: 20px;
+    }
+
+    .events .event .title {
+      display: flex;
+      align-items: center;
+      pointer-events: none;
+    }
+
+    .events .event .title .event-title {
+      font-size: 1rem;
+      font-weight: 400;
+      margin-left: 10px;
+      margin-bottom: 0rem;
+    }
+
+    .events .event i {
+      font-size: 0.5rem;
+    }
+
+    .events .event .event-time {
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: #878895;
+      margin-left: 20px;
+      pointer-events: none;
+    }
+
+    .add-event {
+      position: absolute;
+      bottom: 30px;
+      right: 30px;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: black;
+      border: 2px solid black;
+      opacity: 0.5;
+      border-radius: 50%;
+      background-color: white;
+      cursor: pointer;
+    }
+
+    .add-event:hover {
+      opacity: 1;
+      border: 2px solid white;
+      color: white;
+    }
+
+    .add-event i {
+      pointer-events: none;
+    }
+
+    .events .no-event {
+      width: 100%;
+      height: 70%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: #878895;
+    }
+
+    .add-event-wrapper {
+      position: absolute;
+      bottom: 100px;
+      left: 50%;
+      width: 90%;
+      max-height: 0;
+      overflow: hidden;
+      border-radius: 5px;
+      background-color: #fff;
+      transform: translateX(-50%);
+      transition: max-height 0.5s ease;
+    }
+
+    .add-event-wrapper.active {
+      max-height: 300px;
+    }
+
+    .add-event-header {
+      width: 100%;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      color: #373c4f;
+      border-bottom: 1px solid #f5f5f5;
+    }
+
+    .add-event-header .closes {
+      cursor: pointer;
+    }
+
+    .add-event-header .title {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #966161;
+    }
+
+    .add-event-body {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 20px;
+    }
+
+    .add-event-body .add-event-input {
+      width: 100%;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .add-event-body .add-event-input input {
+      width: 100%;
+      height: 100%;
+      outline: none;
+      border: none;
+      border-bottom: 1px solid #f5f5f5;
+      padding: 0 10px;
+      font-size: 1rem;
+      font-weight: 400;
+      color: #373c4f;
+    }
+
+    .add-event-body .add-event-input input::placeholder {
+      color: #a5a5a5;
+    }
+
+    .add-event-footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .add-event-footer .add-event-btn {
+      height: 40px;
+      font-size: 1rem;
+      font-weight: 500;
+      outline: none;
+      border: none;
+      color: #fff;
+      border-radius: 5px;
+      cursor: pointer;
+      padding: 5px 10px;
+    }
+
+    .add-event-footer .add-event-btn:hover {
+      background-color: transparent;
+    }
+
+    /* media queries */
+
+    @media screen and (max-width: 1000px) {
+      body {
+          align-items: flex-start;
+          justify-content: flex-start;
+      }
+      .containers {
+          min-height: 100vh;
+          flex-direction: column;
+          border-radius: 0;
+      }
+      .containers .left {
+          width: 100%;
+          height: 100%;
+          padding: 20px 0;
+      }
+      .containers .right {
+          width: 100%;
+          height: 100%;
+          padding: 20px 0;
+      }
+      .calendar::before,
+      .calendar::after {
+          top: 100%;
+          left: 50%;
+          width: 97%;
+          height: 12px;
+          border-radius: 0 0 5px 5px;
+          transform: translateX(-50%);
+      }
+      .calendar::before {
+          width: 94%;
+          top: calc(100% + 12px);
+      }
+      .events {
+          padding-bottom: 340px;
+      }
+      .add-event-wrapper {
+          bottom: 100px;
+      }
+      }
+      @media screen and (max-width: 500px) {
+      .calendar .month {
+          height: 75px;
+      }
+      .calendar .weekdays {
+          height: 50px;
+      }
+      .calendar .days .day {
+          height: 40px;
+          font-size: 0.8rem;
+      }
+      .calendar .days .day.active,
+      .calendar .days .day.today {
+          font-size: 1rem;
+      }
+      .right .today-date {
+          padding: 20px;
+      }
+    }
+</style>
+<script>
+    const calendar = document.querySelector(".calendar"),
+    date = document.querySelector(".date"),
+    daysContainer = document.querySelector(".days"),
+    prev = document.querySelector(".prev"),
+    next = document.querySelector(".next"),
+    todayBtn = document.querySelector(".today-btn"),
+    gotoBtn = document.querySelector(".goto-btn"),
+    dateInput = document.querySelector(".date-input"),
+    eventDay = document.querySelector(".event-day"),
+    eventDate = document.querySelector(".event-date"),
+    eventsContainer = document.querySelector(".events"),
+    addEventBtn = document.querySelector(".add-event"),
+    addEventWrapper = document.querySelector(".add-event-wrapper "),
+    addEventCloseBtn = document.querySelector(".closes "),
+    addEventTitle = document.querySelector(".event-name "),
+    addEventFrom = document.querySelector(".event-time-from "),
+    addEventTo = document.querySelector(".event-time-to "),
+    addEventSubmit = document.querySelector(".add-event-btn ");
+
+    let today = new Date();
+    let activeDay;
+    let month = today.getMonth();
+    let year = today.getFullYear();
+
+    const months = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+
+    const eventsArr = [];
+    getEvents();
+    console.log(eventsArr);
+
+    // Selection Sort function to sort events based on start time
+    function selectionSortEvents(events) {
+      for (let i = 0; i < events.length - 1; i++) {
+        let minIndex = i;
+        for (let j = i + 1; j < events.length; j++) {
+          if (events[j].start < events[minIndex].start) {
+            minIndex = j;
+          }
+        }
+        if (minIndex !== i) {
+          [events[i], events[minIndex]] = [events[minIndex], events[i]];
+        }
+      }
+    }
+
+    //function to add days in days with class day and prev-date next-date on previous month and next month days and active on today
+    function initCalendar() {
+      const firstDay = new Date(year, month, 1);
+      const lastDay = new Date(year, month + 1, 0);
+      const prevLastDay = new Date(year, month, 0);
+      const prevDays = prevLastDay.getDate();
+      const lastDate = lastDay.getDate();
+      const day = firstDay.getDay();
+      const nextDays = 7 - lastDay.getDay() - 1;
+
+      date.innerHTML = months[month] + " " + year;
+
+      let days = "";
+
+      for (let x = day; x > 0; x--) {
+        days += `<div class="day prev-date">${prevDays - x + 1}</div>`;
+      }
+
+      for (let i = 1; i <= lastDate; i++) {
+        //check if event is present on that day
+        let event = false;
+        eventsArr.forEach((eventObj) => {
+          if (
+            eventObj.day === i &&
+            eventObj.month === month + 1 &&
+            eventObj.year === year
+          ) {
+            event = true;
+          }
+        });
+        if (
+          i === new Date().getDate() &&
+          year === new Date().getFullYear() &&
+          month === new Date().getMonth()
+        ) {
+          activeDay = i;
+          getActiveDay(i);
+          updateEvents(i);
+          if (event) {
+            days += `<div class="day today active event">${i}</div>`;
+          } else {
+            days += `<div class="day today active">${i}</div>`;
+          }
+        } else {
+          if (event) {
+            days += `<div class="day event">${i}</div>`;
+          } else {
+            days += `<div class="day ">${i}</div>`;
+          }
+        }
+      }
+
+      for (let j = 1; j <= nextDays; j++) {
+        days += `<div class="day next-date">${j}</div>`;
+      }
+      daysContainer.innerHTML = days;
+      addListner();
+    }
+
+    //function to add month and year on prev and next button
+    function prevMonth() {
+      month--;
+      if (month < 0) {
+        month = 11;
+        year--;
+      }
+      initCalendar();
+    }
+
+    function nextMonth() {
+      month++;
+      if (month > 11) {
+        month = 0;
+        year++;
+      }
+      initCalendar();
+    }
+
+    prev.addEventListener("click", prevMonth);
+    next.addEventListener("click", nextMonth);
+
+    initCalendar();
+
+    //function to add active on day
+    function addListner() {
+      const days = document.querySelectorAll(".day");
+      days.forEach((day) => {
+        day.addEventListener("click", (e) => {
+          getActiveDay(e.target.innerHTML);
+          updateEvents(Number(e.target.innerHTML));
+          activeDay = Number(e.target.innerHTML);
+          //remove active
+          days.forEach((day) => {
+            day.classList.remove("active");
+          });
+          //if clicked prev-date or next-date switch to that month
+          if (e.target.classList.contains("prev-date")) {
+            prevMonth();
+            //add active to clicked day afte month is change
+            setTimeout(() => {
+              //add active where no prev-date or next-date
+              const days = document.querySelectorAll(".day");
+              days.forEach((day) => {
+                if (
+                  !day.classList.contains("prev-date") &&
+                  day.innerHTML === e.target.innerHTML
+                ) {
+                  day.classList.add("active");
+                }
+              });
+            }, 100);
+          } else if (e.target.classList.contains("next-date")) {
+            nextMonth();
+            //add active to clicked day afte month is changed
+            setTimeout(() => {
+              const days = document.querySelectorAll(".day");
+              days.forEach((day) => {
+                if (
+                  !day.classList.contains("next-date") &&
+                  day.innerHTML === e.target.innerHTML
+                ) {
+                  day.classList.add("active");
+                }
+              });
+            }, 100);
+          } else {
+            e.target.classList.add("active");
+          }
+        });
+      });
+    }
+
+    todayBtn.addEventListener("click", () => {
+      today = new Date();
+      month = today.getMonth();
+      year = today.getFullYear();
+      initCalendar();
+    });
+
+    dateInput.addEventListener("input", (e) => {
+      dateInput.value = dateInput.value.replace(/[^0-9/]/g, "");
+      if (dateInput.value.length === 2) {
+        dateInput.value += "/";
+      }
+      if (dateInput.value.length > 7) {
+        dateInput.value = dateInput.value.slice(0, 7);
+      }
+      if (e.inputType === "deleteContentBackward") {
+        if (dateInput.value.length === 3) {
+          dateInput.value = dateInput.value.slice(0, 2);
+        }
+      }
+    });
+
+    gotoBtn.addEventListener("click", gotoDate);
+
+    function gotoDate() {
+      console.log("here");
+      const dateArr = dateInput.value.split("/");
+      if (dateArr.length === 2) {
+        if (dateArr[0] > 0 && dateArr[0] < 13 && dateArr[1].length === 4) {
+          month = dateArr[0] - 1;
+          year = dateArr[1];
+          initCalendar();
+          return;
+        }
+      }
+      alert("Invalid Date");
+    }
+
+    //function get active day day name and date and update eventday eventdate
+    function getActiveDay(date) {
+      const day = new Date(year, month, date);
+      const dayName = day.toString().split(" ")[0];
+      eventDay.innerHTML = dayName;
+      eventDate.innerHTML = date + " " + months[month] + " " + year;
+    }
+
+
+
+    function convertTo24Hour(time) {
+      let [hour, minute] = time.split(":").map(Number);
+      if (time.includes("PM") && hour !== 12) hour += 12;
+      if (time.includes("AM") && hour === 12) hour = 0;
+      return [hour, minute];
+    }
+
+    // Selection Sort function to sort events based on start time
+    function selectionSortEvents(events) {
+      for (let i = 0; i < events.length - 1; i++) {
+        let minIndex = i;
+        for (let j = i + 1; j < events.length; j++) {
+          let [minStartHour, minStartMinute] = convertTo24Hour(events[minIndex].time.split(" - ")[0]);
+          let [startHour, startMinute] = convertTo24Hour(events[j].time.split(" - ")[0]);
+
+          if (startHour < minStartHour || (startHour === minStartHour && startMinute < minStartMinute)) {
+            minIndex = j;
+          }
+        }
+        if (minIndex !== i) {
+          [events[i], events[minIndex]] = [events[minIndex], events[i]];
+        }
+      }
+    }
+
+    // Function to update events when a day is active
+    function updateEvents(date) {
+      let eventsHTML = "";
+      let filteredEvents = [];
+
+      // Filter events for the specific date
+      eventsArr.forEach((event) => {
+        if (
+          date === event.day &&
+          month + 1 === event.month &&
+          year === event.year
+        ) {
+          filteredEvents.push(...event.events);
+        }
+      });
+
+      // Sort the filtered events based on time
+      selectionSortEvents(filteredEvents);
+
+      // Generate HTML for sorted events
+      filteredEvents.forEach((event) => {
+        eventsHTML += `<div class="event">
+            <div class="title">
+              <span class="material-symbols-outlined full" style="color: #e7b4c9;">
+                          deceased
+              </span>
+              <h3 class="event-title">${event.title}</h3>
+            </div>
+            <div class="event-time">
+              <span class="event-time">${event.time}</span>
+            </div>
+          </div>`;
+      });
+
+      if (eventsHTML === "") {
+        eventsHTML = `<div class="no-event">
+            <h3>No Events</h3>
+          </div>`;
+      }
+
+      eventsContainer.innerHTML = eventsHTML;
+      saveEvents();
+    }
+
+    //function to add event
+    addEventBtn.addEventListener("click", () => {
+      addEventWrapper.classList.toggle("active");
+    });
+
+    addEventCloseBtn.addEventListener("click", () => {
+      addEventWrapper.classList.remove("active");
+    });
+
+    document.addEventListener("click", (e) => {
+      if (e.target !== addEventBtn && !addEventWrapper.contains(e.target)) {
+        addEventWrapper.classList.remove("active");
+      }
+    });
+
+    //allow 50 chars in eventtitle
+    addEventTitle.addEventListener("input", (e) => {
+      addEventTitle.value = addEventTitle.value.slice(0, 60);
+    });
+
+    //allow only time in eventtime from and to
+    addEventFrom.addEventListener("input", (e) => {
+      addEventFrom.value = addEventFrom.value.replace(/[^0-9:]/g, "");
+      if (addEventFrom.value.length === 2) {
+        addEventFrom.value += ":";
+      }
+      if (addEventFrom.value.length > 5) {
+        addEventFrom.value = addEventFrom.value.slice(0, 5);
+      }
+    });
+
+    addEventTo.addEventListener("input", (e) => {
+      addEventTo.value = addEventTo.value.replace(/[^0-9:]/g, "");
+      if (addEventTo.value.length === 2) {
+        addEventTo.value += ":";
+      }
+      if (addEventTo.value.length > 5) {
+        addEventTo.value = addEventTo.value.slice(0, 5);
+      }
+    });
+
+    //function to add event to eventsArr
+    addEventSubmit.addEventListener("click", () => {
+      const eventTitle = addEventTitle.value;
+      const eventTimeFrom = addEventFrom.value;
+      const eventTimeTo = addEventTo.value;
+      if (eventTitle === "" || eventTimeFrom === "" || eventTimeTo === "") {
+        alert("Please fill all the fields");
+        return;
+      }
+
+      //check correct time format 24 hour
+      const timeFromArr = eventTimeFrom.split(":");
+      const timeToArr = eventTimeTo.split(":");
+      if (
+        timeFromArr.length !== 2 ||
+        timeToArr.length !== 2 ||
+        timeFromArr[0] > 23 ||
+        timeFromArr[1] > 59 ||
+        timeToArr[0] > 23 ||
+        timeToArr[1] > 59
+      ) {
+        alert("Invalid Time Format");
+        return;
+      }
+
+      const timeFrom = convertTime(eventTimeFrom);
+      const timeTo = convertTime(eventTimeTo);
+
+      //check if event is already added
+      let eventExist = false;
+      eventsArr.forEach((event) => {
+        if (
+          event.day === activeDay &&
+          event.month === month + 1 &&
+          event.year === year
+        ) {
+          event.events.forEach((event) => {
+            if (event.title === eventTitle) {
+              eventExist = true;
+            }
+          });
+        }
+      });
+      if (eventExist) {
+        alert("Event already added");
+        return;
+      }
+      const newEvent = {
+        title: eventTitle,
+        time: timeFrom + " - " + timeTo,
+      };
+      console.log(newEvent);
+      console.log(activeDay);
+      let eventAdded = false;
+      if (eventsArr.length > 0) {
+        eventsArr.forEach((item) => {
+          if (
+            item.day === activeDay &&
+            item.month === month + 1 &&
+            item.year === year
+          ) {
+            item.events.push(newEvent);
+            eventAdded = true;
+          }
+        });
+      }
+
+      if (!eventAdded) {
+        eventsArr.push({
+          day: activeDay,
+          month: month + 1,
+          year: year,
+          events: [newEvent],
+        });
+      }
+
+      console.log(eventsArr);
+      addEventWrapper.classList.remove("active");
+      addEventTitle.value = "";
+      addEventFrom.value = "";
+      addEventTo.value = "";
+      updateEvents(activeDay);
+      //select active day and add event class if not added
+      const activeDayEl = document.querySelector(".day.active");
+      if (!activeDayEl.classList.contains("event")) {
+        activeDayEl.classList.add("event");
+      }
+    });
+
+
+    //function to save events in local storage
+    function saveEvents() {
+      localStorage.setItem("events", JSON.stringify(eventsArr));
+    }
+
+    //function to get events from local storage
+    function getEvents() {
+      //check if events are already saved in local storage then return event else nothing
+      if (localStorage.getItem("events") === null) {
+        return;
+      }
+      eventsArr.push(...JSON.parse(localStorage.getItem("events")));
+    }
+
+    function convertTime(time) {
+      //convert time to 24 hour format
+      let timeArr = time.split(":");
+      let timeHour = timeArr[0];
+      let timeMin = timeArr[1];
+      let timeFormat = timeHour >= 12 ? "PM" : "AM";
+      timeHour = timeHour % 12 || 12;
+      time = timeHour + ":" + timeMin + " " + timeFormat;
+      return time;
+    }
+</script>
 {% endblock %}
