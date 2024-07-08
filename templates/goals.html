@@ -36,7 +36,7 @@
         <input type="text" placeholder="What's your goal?" id="userInput">
         <button type="submit">Add Goal</button>
         <button id="sortGoalsButton" style="background: linear-gradient(145deg, #d488ea, #8389f9);">Sort Goals</button>
-        <button id="deleteAllGoalsBtn">Delete Goals</button>
+        <!-- <button id="deleteAllGoalsBtn">Delete Goals</button> -->
     </div>
 </form>
 <div class="goalsContainer">
@@ -265,6 +265,11 @@
         for (let goal of goalStorage) {
             createGoalElement(goal, false);
         }
+
+        // Update local storage
+        setTimeout(function() {
+            alert("Goals are now sorted.");
+        }, 0);
     });
 
     // Delete all goals button click event
