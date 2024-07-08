@@ -9,6 +9,224 @@
 {% endblock %}
 
 {% block content %}
-    <h2>My Profile</h2>
-    <p>Your personal profile information.</p>
+    <div class="logo">
+        <h2 style="color: #7a4fa1;">
+            <img src="https://99gifshop.neocities.org/items/11/tulips_blue_lg_clr.gif" title="TaskZenith" width="30%">
+            TaskZenith
+        </h2>
+        <div class="close">
+            <span class="material-symbols-outlined">close</span>
+        </div>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="/" id="dashboard-link"><span class="material-symbols-outlined">dashboard</span><span class="title">Dashboard</span></a></li>
+            <li><a href="/tasks" id="tasks-link"><span class="material-symbols-outlined">check_box</span><span class="title">Tasks</span></a></li>
+            <li><a href="/goals" id="goals-link"><span class="material-symbols-outlined">flag</span><span class="title">Goals</span></a></li>
+            <li><a href="/schedule" id="schedule-link"><span class="material-symbols-outlined">calendar_month</span><span class="title">Schedule</span></a></li>
+            <li><a href="/projects" id="projects-link"><span class="material-symbols-outlined">inventory_2</span><span class="title">Projects</span></a></li>
+            <li><a href="/profile" id="profile-link" class="fill"><span class="material-symbols-outlined full">group</span><span class="title-full">My Profile</span></a></li>
+        </ul>
+    </nav>
+{% endblock %}
+
+{% block additional_content %}
+<div class="profile-card">
+    <div class="profile-header">
+        <img src="/static/images/img1.jpg" alt="Profile Picture">
+        <h3>Langa Hasegawa</h3>
+        <p>TaskZenith User</p>
+    </div>
+</div>
+
+    <div class="personal-info">
+        <h3 style="padding-left: 50px;">Personal Information</h3>
+        <div class="info">
+            <div>
+                <strong>First Name</strong>
+                <p class="view-mode">Langa</p>
+                <input type="text" class="edit-mode inputInfo" placeholder="First Name" autocomplete="off">
+            </div>
+            <div>
+                <strong>Last Name</strong>
+                <p class="view-mode">Hasegawa</p>
+                <input type="text" class="edit-mode inputInfo" placeholder="Last Name" autocomplete="off">
+            </div>
+            <div>
+                <strong>Email Address</strong>
+                <p class="view-mode" style="margin: 0 0 10px;">langahasegawa@gmail.com</p>
+                <input type="email" class="edit-mode inputInfo" placeholder="Email" autocomplete="off">
+            </div>
+            <div>
+                <strong>Phone Number</strong>
+                <p class="view-mode" style="margin: 0 0 10px;">09123456789</p>
+                <input type="text" class="edit-mode inputInfo" placeholder="Phone Number" autocomplete="off">
+            </div>
+        </div>
+        <div class="flex-direction: row;">
+            <button id="edit-button" class="edit-btn">Edit Profile</button>
+            <button id="save-button" class="edit-mode">Save Changes</button>
+        </div>
+    </div>
+
+
+<style>
+    .personal-info,
+    .profile-card {
+        background-color: #FFF;
+        border-radius: 30px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        padding: 20px;
+        position: relative;
+        align-items: center;
+        justify-content: space-between;
+        width: 60%;
+        margin: auto;
+    }
+
+    .personal-card{
+        margin-bottom: 0px;
+    }
+
+    .personal-info{
+        margin-top: 0px;
+        padding-top: 30px;
+        padding-left: 40px;
+        padding-right: 40px;
+    }
+
+    .profile-header {
+        text-align: center;
+    }
+
+    .profile-header img {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        margin-bottom: 10px;
+    }
+
+    .profile-header h3 {
+        margin: 0;
+        font-size: 22px;
+        color: #433054;
+    }
+
+    .profile-header p {
+        margin: 5px 0 5px;
+        color: #888;
+    }
+
+    .personal-info h3 {
+        margin: 0 0 10px;
+        font-size: 20px;
+        color: #4A4A4A;
+    }
+
+    .personal-info p {
+        margin: 0 0 20px;
+        color: #666;
+    }
+
+    .info {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding-left: 50px;
+    }
+
+    .info div {
+        flex: 1 1 45%;
+        margin: 5px 0;
+    }
+
+    .info strong {
+        display: block;
+        margin-bottom: 5px;
+        color: #4A4A4A;
+    }
+
+    .edit-mode {
+        display: none;
+    }
+
+    .edit-btn, #save-button {
+        background-color: #573b8a;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 30px;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: .2s ease-in;
+        width: 25%;
+    }
+
+    .inputInfo{
+        width: 65%;
+        margin: 0 0 20px;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Load saved values from localStorage
+        document.querySelectorAll('.inputInfo').forEach(function(input, index) {
+            const savedValue = localStorage.getItem('inputInfo' + index);
+            if (savedValue !== null) {
+                input.value = savedValue;
+                document.querySelectorAll('.view-mode')[index].innerText = savedValue;
+            }
+        });
+
+        const savedFirstName = localStorage.getItem('inputInfoFirstName');
+        const savedLastName = localStorage.getItem('inputInfoLastName');
+        if (savedFirstName && savedLastName) {
+            document.querySelector('.profile-header h3').innerText = `${savedFirstName} ${savedLastName}`;
+        }
+
+        document.querySelectorAll('.view-mode').forEach(function(el) {
+            el.style.display = 'block';
+        });
+        document.querySelectorAll('.edit-mode').forEach(function(el) {
+            el.style.display = 'none';
+        });
+    });
+
+    document.getElementById('edit-button').addEventListener('click', function() {
+        document.querySelectorAll('.view-mode').forEach(function(el) {
+            el.style.display = 'none';
+        });
+        document.querySelectorAll('.edit-mode').forEach(function(el) {
+            el.style.display = 'block';
+        });
+        document.getElementById('edit-button').style.display = 'none';
+    });
+
+    document.getElementById('save-button').addEventListener('click', function() {
+        const firstName = document.querySelectorAll('.edit-mode')[0].value;
+        const lastName = document.querySelectorAll('.edit-mode')[1].value;
+
+        document.querySelector('.profile-header h3').innerText = `${firstName} ${lastName}`;
+
+        document.querySelectorAll('.view-mode').forEach(function(el, index) {
+            const newValue = document.querySelectorAll('.edit-mode')[index].value;
+            el.innerText = newValue;
+            el.style.display = 'block';
+
+            // Save new value to localStorage
+            localStorage.setItem('inputInfo' + index, newValue);
+        });
+
+        localStorage.setItem('inputInfoFirstName', firstName);
+        localStorage.setItem('inputInfoLastName', lastName);
+
+        document.querySelectorAll('.edit-mode').forEach(function(el) {
+            el.style.display = 'none';
+        });
+        document.getElementById('edit-button').style.display = 'block';
+    });
+</script>
+
+
 {% endblock %}
