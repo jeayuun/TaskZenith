@@ -38,6 +38,7 @@
         <input type="text" placeholder="Enter a task" id="userInput">
         <button type="submit">Add Task</button>
         <button id="sortTasksButton" style="background: linear-gradient(145deg, #d488ea, #8389f9);">Sort Tasks</button>
+        <button id="deleteAllTasksBtn">Delete Tasks</button>
     </div>
 </form>
 <div class="tasksContainer">
@@ -74,7 +75,7 @@
             var parsed = JSON.parse(getItemOnLocalStorage('tasks'));
             var max = 0;
             for (var i = 0; i < parsed.length; i++) {
-                createElement(parsed[i]);  // Append tasks to their correct sections
+                createElement(parsed[i], false);  // Append tasks to their correct sections
                 if (parsed[i].id > max) {
                     max = parsed[i].id;
                 }
@@ -105,8 +106,6 @@
                     case 'Life':
                         processElement.classList.add('life-color');
                         break;
-                    default:
-                        processElement.classList.add('school-color'); // Default to school color if not specified
                 }
             });
         }
@@ -150,25 +149,32 @@
     document.getElementById('taskForm').addEventListener('submit', function (e) {
         e.preventDefault(); // Prevent form submission
         var userInput = document.getElementById('userInput').value;
-        if (userInput) {
-            var objData = {
-                id: ++liId,
-                value: userInput,
-                parent: 'toDo',
-                priority: 'Low Priority',
-                process: 'School',
-                dueDate: ''
-            };
-            createElement(objData);
-            setItemOnLocalStorage('tasks', JSON.stringify(storage));
-            document.getElementById('userInput').value = ''; // Clear the input field
+
+        // Check if the clicked button is the "Add Task" button
+        if (e.submitter && e.submitter.innerText === "Add Task") {
+            if (userInput) {
+                var objData = {
+                    id: ++liId,
+                    value: userInput,
+                    parent: 'toDo',
+                    priority: 'Low Priority',
+                    process: 'School',
+                    dueDate: ''
+                };
+                createElement(objData, true);
+                setItemOnLocalStorage('tasks', JSON.stringify(storage));
+                document.getElementById('userInput').value = ''; // Clear the input field
+            } else {
+                alert("Please enter the task.");
+            }
         } else {
-            alert('There is no data to be added');
+            // Handle other buttons (Sort Tasks, Delete Tasks) if necessary
+            // For now, do nothing if it's not the "Add Task" button
         }
     });
 
     // Functions to create a new element (task)
-    function createElement(objData) {
+    function createElement(objData, addToStorage) {
         console.log('Creating element:', objData); // Debugging
         var obj = {
             id: objData.id,
@@ -186,7 +192,9 @@
         list.addEventListener('dragstart', function (event) {
             event.dataTransfer.setData('text', event.target.id);
         });
-        storage.push(obj);
+        if (addToStorage) {
+            storage.push(obj);
+        }
     }
 
     function togglePriority(priorityElement, taskId) {
@@ -195,19 +203,19 @@
 
         switch (currentPriority) {
             case 'Medium Priority':
-                newPriority = 'Low Priority';
-                priorityElement.classList.remove('medium-priority');
-                priorityElement.classList.add('low-priority');
-                break;
-            case 'Low Priority':
                 newPriority = 'High Priority';
-                priorityElement.classList.remove('low-priority');
+                priorityElement.classList.remove('medium-priority');
                 priorityElement.classList.add('high-priority');
                 break;
-            case 'High Priority':
+            case 'Low Priority':
                 newPriority = 'Medium Priority';
-                priorityElement.classList.remove('high-priority');
+                priorityElement.classList.remove('low-priority');
                 priorityElement.classList.add('medium-priority');
+                break;
+            case 'High Priority':
+                newPriority = 'Low Priority';
+                priorityElement.classList.remove('high-priority');
+                priorityElement.classList.add('low-priority');
                 break;
         }
 
@@ -332,17 +340,37 @@
         return localStorage.getItem(key);
     }
 
+    // Selection Sort Algorithm
+    function selectionSort(arr, compare) {
+        for (let i = 0; i < arr.length - 1; i++) {
+            let minIndex = i;
+            for (let j = i + 1; j < arr.length; j++) {
+                if (compare(arr[j], arr[minIndex])) {
+                    minIndex = j;
+                }
+            }
+            if (minIndex !== i) {
+                let temp = arr[i];
+                arr[i] = arr[minIndex];
+                arr[minIndex] = temp;
+            }
+        }
+    }
+
+    // Comparison function for sorting tasks
+    function compareTasks(a, b) {
+        const priorityOrder = {'High Priority': 1, 'Medium Priority': 2, 'Low Priority': 3};
+        if (priorityOrder[a.priority] !== priorityOrder[b.priority]) {
+            return priorityOrder[a.priority] < priorityOrder[b.priority];
+        } else {
+            return new Date(a.dueDate) < new Date(b.dueDate);
+        }
+    }
+
     // Sort tasks button click event
     document.getElementById('sortTasksButton').addEventListener('click', function() {
-        // Sort tasks in storage array
-        storage.sort(function(a, b) {
-            var priorityOrder = {'High Priority': 1, 'Medium Priority': 2, 'Low Priority': 3};
-            if (a.priority !== b.priority) {
-                return priorityOrder[a.priority] - priorityOrder[b.priority];
-            } else {
-                return new Date(a.dueDate) - new Date(b.dueDate);
-            }
-        });
+        // Sort tasks in storage array using Selection Sort
+        selectionSort(storage, compareTasks);
 
         // Clear current tasks in DOM
         document.querySelectorAll('.tasksSection').forEach(function(section) {
@@ -351,11 +379,14 @@
 
         // Re-create elements based on sorted tasks
         storage.forEach(function(task) {
-            createElement(task);
+            createElement(task, false);
         });
 
         // Update local storage
         setItemOnLocalStorage('tasks', JSON.stringify(storage));
+        setTimeout(function() {
+            alert("Tasks are now sorted.");
+        }, 0);
     });
 
     // Drag and drop functions
@@ -384,5 +415,26 @@
             setItemOnLocalStorage('tasks', JSON.stringify(storage));
         }
     });
+
+    // Function to remove duplicate tasks
+    function removeDuplicates() {
+        var uniqueTasks = [];
+        var taskIds = new Set();
+
+        storage.forEach(function(task) {
+            if (!taskIds.has(task.id)) {
+                uniqueTasks.push(task);
+                taskIds.add(task.id);
+            }
+        });
+
+        storage = uniqueTasks;
+        setItemOnLocalStorage('tasks', JSON.stringify(storage));
+    }
+
+    // Call removeDuplicates to clean up any existing duplicates
+    removeDuplicates();
+
 </script>
+
 {% endblock %}
