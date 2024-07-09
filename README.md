@@ -3,7 +3,7 @@ Final Project for COSC 203: DESIGN AND ANALYSIS OF ALGORITHMS - PUP BSCS 2-1N A.
 
 <!-- ABOUT THE PROJECT -->
 ## ABOUT THE PROJECT
-### ***TaskZenith***
+### ***TaskZenith: Enhancing Productivity with Selection Sort Algorithm***
 > TaskZenith is designed to provide a tool for organizing and prioritizing tasks by making use of the Selection Sort Algorithm, which is well known for its simplicity and effectiveness in handling smaller datasets. It allows users to manage tasks, goals, schedules, and projects effectively, all while ensuring a consistent and visually appealing design. TaskZenith's user interface was developed using HTML, CSS, and JavaScript as its main programming languages in order to provide a responsive and interactive user-friendly application. The back end was developed using Python Flask to handle server-side operations and manage data from the application. The development of TaskZenith highlights the importance of implementing computer science concepts to develop primary solutions that will improve everyday life. 
 
 ### ***Dashboard***
