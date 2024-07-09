@@ -56,6 +56,7 @@ Serves as the base template for all other HTML templates in the TaskZenith appli
 
 #### dashboard.html
 The template for the home page, which users see after logging in. It serves as a central hub, displaying an overview of tasks, goals, schedule, and projects.
+![Dashboard](https://github.com/jeayuun/TaskZenith/blob/main/dashboard.png?raw=true)
 
 #### tasks.html
 The template for the tasks management page. It allows users to view, add, and manage their tasks (sort tasks with the use of SELECTION SORT ALGORITHM) within the application.
