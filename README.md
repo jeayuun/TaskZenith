@@ -134,4 +134,49 @@ flask run
 
 The application should now be running on `http://127.0.0.1:1337/`.
 
+## Usage
 
+### Routes
+
+- **Home Page:** `/` - Requires login. Displays the dashboard.
+- **Tasks:** `/tasks` - Requires login. Manage your tasks.
+- **Goals:** `/goals` - Requires login. Manage your goals.
+- **Schedule:** `/schedule` - Requires login. Manage your schedule.
+- **Projects:** `/projects` - Requires login. Manage your projects.
+- **Profile:** `/profile` - Requires login. View and edit your profile.
+- **About:** `/about` - Learn more about TaskZenith.
+- **Register:** `/register` - Register a new user.
+- **Login:** `/login` - Log in to your account.
+
+### User Authentication
+
+- **Register:** Users can register by providing a username, password, and password confirmation. Passwords must match.
+- **Login:** Users can log in with their username and password.
+
+### Flash Messages
+
+Flash messages are used to provide feedback to users (e.g., successful registration, login errors).
+
+### Templates
+
+Templates are located in the `templates` directory and use Jinja2 for rendering dynamic content.
+
+### Static Files
+
+Static files (CSS, images) are located in the `static` directory.
+
+## Contribution
+
+If you'd like to contribute to TaskZenith, please fork the repository and use a feature branch. Pull requests are welcome.
+
+## License
+
+This project is open-source and available under the [MIT License](LICENSE).
+
+## Acknowledgements
+
+This project uses the following libraries:
+
+- Flask
+- CS50 Library for SQL
+- Werkzeug
