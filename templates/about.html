@@ -1,0 +1,41 @@
+{% extends "index.html" %}
+
+{% block title %}
+    About Us
+{% endblock %}
+
+{% block content %}
+    <div class="logo">
+        <h2 style="color: #7a4fa1;">
+            <img src="https://99gifshop.neocities.org/items/11/tulips_blue_lg_clr.gif" title="TaskZenith" width="30%">
+            TaskZenith
+        </h2>
+        <div class="close">
+            <span class="material-symbols-outlined">close</span>
+        </div>
+    </div>
+    <nav>
+        <ul>
+            <li><a href="/" id="dashboard-link"><span class="material-symbols-outlined">dashboard</span><span class="title">Dashboard</span></a></li>
+            <li><a href="/tasks" id="tasks-link"><span class="material-symbols-outlined">check_box</span><span class="title">Tasks</span></a></li>
+            <li><a href="/goals" id="goals-link"><span class="material-symbols-outlined">flag</span><span class="title">Goals</span></a></li>
+            <li><a href="/schedule" id="schedule-link"><span class="material-symbols-outlined">calendar_month</span><span class="title">Schedule</span></a></li>
+            <li><a href="/projects" id="projects-link"><span class="material-symbols-outlined">inventory_2</span><span class="title">Projects</span></a></li>
+            <li><a href="/profile" id="profile-link"><span class="material-symbols-outlined">group</span><span class="title">My Profile</span></a></li>
+        </ul>
+    </nav>
+{% endblock %}
+
+{% block additional_content %}
+<main style="margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url('/static/images/Group 8.png');
+            background-size: cover;
+            background-position: center;
+            border-radius: 30px;">
+</main>
+{% endblock %}
