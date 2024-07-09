@@ -71,12 +71,15 @@ The template for the schedule management page. Users can view and manage their s
 
 #### projects.html
 The template for the projects management page. It allows users to organize and monitor the progress of their projects (sort projects with the use of SELECTION SORT ALGORITHM).
+![Projects](https://github.com/jeayuun/TaskZenith/blob/main/Screenshots/Projects.png?raw=true)
 
 #### profile.html
 The template for the profile page. Users can view and edit their personal information and account settings.
+![Profile](https://github.com/jeayuun/TaskZenith/blob/main/Screenshots/Profile.png?raw=true)
 
 #### about.html
 The template for the about page. It provides information about the people behind TaskZenith application.
+![About](https://github.com/jeayuun/TaskZenith/blob/main/Screenshots/About.png?raw=true)
 
 ## Static Files
 
