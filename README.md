@@ -64,6 +64,7 @@ The template for the tasks management page. It allows users to view, add, and ma
 
 #### goals.html
 The template for the goals management page. It provides an interface for users to set and track their personal or professional goals. Also sorts goals with the use of SELECTION SORT ALGORITHM.
+![Goals](https://github.com/jeayuun/TaskZenith/blob/main/Goals.png?raw=true)
 
 #### schedule.html
 The template for the schedule management page. Users can view and manage their schedules, ensuring they stay on top of their appointments and deadlines. Daily events are scheduled automatically based on time schedule, it utilizes SELECTION SORT ALGORITHM in doing so.
