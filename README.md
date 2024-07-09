@@ -1,5 +1,6 @@
 # TaskZenith :tulip::purple_heart:
 Final Project for COSC 203: DESIGN AND ANALYSIS OF ALGORITHMS - BSCS 2-1N A.Y. 2023-2024
+Polytechnic University of the Philippines
 
 <!-- ABOUT THE PROJECT -->
 ## ABOUT THE PROJECT
