@@ -32,7 +32,6 @@
 
 {% block additional_content %}
 <form autocomplete="off" id="projectForm">
-    <!-- user will input the task here -->
     <div class="inputBox">
         <input type="text" placeholder="Enter project" id="projectInput">
         <button type="submit">Add Project</button>
@@ -40,9 +39,7 @@
         <!-- <button id="deleteAllProjectsBtn">Delete Projects</button> -->
     </div>
 </form>
-<main style="display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: auto; gap: 16px; overflow-y: auto;">
-    <!-- Project cards will be dynamically added here -->
-</main>
+<main style="display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: auto; gap: 16px; overflow-y: auto;"></main>
 
 <script>
     var projectStorage = [];
@@ -50,13 +47,12 @@
     var projectSpanId = 0;
     var projectBtnClicked = 0;
 
-    // Self-invoked function to get elements from local storage
     (function () {
         if (getItemOnLocalStorage('projects')) {
             var parsed = JSON.parse(getItemOnLocalStorage('projects'));
             var max = 0;
             for (var i = 0; i < parsed.length; i++) {
-                createProjectElement(parsed[i], false);  // Append projects to their correct sections
+                createProjectElement(parsed[i], false);
                 if (parsed[i].id > max) {
                     max = parsed[i].id;
                 }
@@ -65,17 +61,14 @@
             projectId = max;
             projectSpanId = max * -1;
 
-            // Initialize process and priority classes based on stored data
             parsed.forEach(function(project) {
                 var projectElement = document.getElementById(project.id);
                 var processElement = projectElement.querySelector('.process');
                 var priorityElement = projectElement.querySelector('.priority');
 
-                // Remove all process and priority color classes
                 processElement.classList.remove('school-color', 'work-color', 'personal-color', 'life-color');
                 priorityElement.classList.remove('low-priority', 'medium-priority', 'high-priority');
 
-                // Add the correct process color class based on project's process attribute
                 switch (project.process) {
                     case 'School':
                         processElement.classList.add('school-color');
@@ -91,7 +84,6 @@
                         break;
                 }
 
-                // Add the correct priority color class based on project's priority attribute
                 switch (project.priority) {
                     case 'Low Priority':
                         priorityElement.classList.add('low-priority');
@@ -107,12 +99,10 @@
         }
     })();
 
-    // Submit btn function
     document.getElementById('projectForm').addEventListener('submit', function (e) {
-        e.preventDefault(); // Prevent form submission
+        e.preventDefault();
         var userInput = document.getElementById('projectInput').value;
 
-        // Check if the clicked button is the "Add Project" button
         if (e.submitter && e.submitter.innerText === "Add Project") {
             if (userInput) {
                 var objData = {
@@ -125,7 +115,7 @@
                 };
                 createProjectElement(objData, true);
                 setItemOnLocalStorage('projects', JSON.stringify(projectStorage));
-                document.getElementById('projectInput').value = ''; // Clear the input field
+                document.getElementById('projectInput').value = '';
             } else {
                 alert("Please enter the project.");
             }
@@ -136,9 +126,8 @@
         }
     });
 
-    // Functions to create a new element (project)
     function createProjectElement(objData, addToStorage) {
-        console.log('Creating element:', objData); // Debugging
+        console.log('Creating element:', objData);
         var obj = {
             id: objData.id,
             value: objData.value,
@@ -149,7 +138,7 @@
         };
         var projectCard = document.createElement('div');
         projectCard.className = 'projectCard';
-        document.querySelector('main').appendChild(projectCard); // Append to main section
+        document.querySelector('main').appendChild(projectCard);
         createProjectCardChildren(projectCard, obj);
         projectCard.id = objData.id;
         projectCard.setAttribute('draggable', true);
@@ -185,7 +174,6 @@
 
         priorityElement.innerHTML = `<h2>${newPriority}</h2>`;
 
-        // Update the priority in storage
         var project = projectStorage.find(item => item.id === projectId);
         project.priority = newPriority;
         setItemOnLocalStorage('projects', JSON.stringify(projectStorage));
@@ -220,14 +208,12 @@
 
         processElement.innerHTML = `<h2>${newProcess}</h2>`;
 
-        // Update the process in storage
         var project = projectStorage.find(item => item.id === projectId);
         project.process = newProcess;
         setItemOnLocalStorage('projects', JSON.stringify(projectStorage));
     }
 
     function createProjectCardChildren(projectCard, objData) {
-        // Create project structure based on provided HTML
         var projectTop = document.createElement('div');
         projectTop.className = 'projectTop';
         projectTop.innerHTML = `<h2>${objData.value}<br></h2>`;
@@ -235,7 +221,6 @@
         var projectProgress = document.createElement('div');
         projectProgress.className = 'projectProgress';
 
-        // Process
         var process = document.createElement('div');
         process.className = `process ${objData.process.toLowerCase()}-color`;
         process.innerHTML = `<h2>${objData.process}</h2>`;
@@ -243,7 +228,6 @@
             toggleProcess(process, objData.id);
         });
 
-        // Priority
         var priority = document.createElement('div');
         priority.className = `priority ${objData.priority.replace(' ', '-').toLowerCase()}`;
         priority.innerHTML = `<h2>${objData.priority}</h2>`;
@@ -272,7 +256,6 @@
         due.className = 'due';
         due.innerHTML = `<h2>Due: </h2>`;
 
-        // Due date input
         var dueDateInput = document.createElement('input');
         dueDateInput.type = 'date';
         dueDateInput.style.width = 'auto';
@@ -294,8 +277,6 @@
         projectCard.appendChild(due);
     }
 
-
-    // Sorting projects using SELECTION SORT ALGORITHM
     function sortProjects() {
         const priorityOrder = {
             'Low Priority': 3,
@@ -319,8 +300,6 @@
                     } else if (!projectStorage[j].dueDate && projectStorage[minIndex].dueDate) {
                         minIndex = j; // J has no due date, so it should come first
                     }
-                    // No need to handle the case where minIndex has no due date and j has a due date
-                    // because it is handled by the previous if statement.
                 }
             }
             // Swap elements if necessary
@@ -331,32 +310,21 @@
             }
         }
 
-        // Clear existing projects from the UI
         document.querySelector('main').innerHTML = '';
 
-        // Re-create project elements based on sorted data
         projectStorage.forEach((project) => {
             createProjectElement(project, false);
         });
 
-        // Save the sorted projects back to local storage
         setItemOnLocalStorage('projects', JSON.stringify(projectStorage));
     }
 
-
-    // Delete all projects
     function deleteAllProjects() {
-        // Clear the projectStorage array
         projectStorage = [];
-
-        // Clear projects from local storage
         localStorage.removeItem('projects');
-
-        // Clear projects from the UI
         document.querySelector('main').innerHTML = '';
     }
 
-    // Helper functions to interact with local storage
     function getItemOnLocalStorage(key) {
         return localStorage.getItem(key);
     }
@@ -364,12 +332,6 @@
     function setItemOnLocalStorage(key, value) {
         localStorage.setItem(key, value);
     }
-
 </script>
 
-
 {% endblock %}
-
-
-
-
