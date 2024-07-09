@@ -1,5 +1,5 @@
 import os
-import SQL
+from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session
 from flask_session import Session
 from tempfile import mkdtemp
@@ -50,6 +50,11 @@ def projects():
 def profile():
     return render_template("profile.html")
 
+@app.route("/about")
+@login_required
+def about():
+    return render_template("about.html")
+
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
@@ -58,16 +63,16 @@ def register():
         confirmation = request.form.get("confirmation")
 
         if not username:
-            flash("Missing username")
+            flash("Missing username", "error")
             return redirect("/register")
         elif not password:
-            flash("Missing password")
+            flash("Missing password", "error")
             return redirect("/register")
         elif not confirmation:
-            flash("Confirm your password")
+            flash("Confirm your password", "error")
             return redirect("/register")
         elif confirmation != password:
-            flash("Passwords do not match")
+            flash("Passwords do not match", "error")
             return redirect("/register")
 
         hashed_password = generate_password_hash(password)
@@ -75,10 +80,10 @@ def register():
         try:
             db.execute("INSERT INTO users (username, hash) VALUES(?, ?)", username, hashed_password)
         except:
-            flash("Username already exists")
+            flash("Username already exists", "error")
             return redirect("/register")
 
-        flash("Registered successfully! Please log in.")
+        flash("Registered successfully! Please log in.", "success")
         return redirect("/login")
 
     return render_template("index.html")
@@ -92,19 +97,20 @@ def login():
         password = request.form.get("password")
 
         if not username:
-            flash("Must provide username")
+            flash("Must provide username", "error")
             return redirect("/login")
         elif not password:
-            flash("Must provide password")
+            flash("Must provide password", "error")
             return redirect("/login")
 
         rows = db.execute("SELECT * FROM users WHERE username = ?", username)
 
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], password):
-            flash("Invalid username or password")
+            flash("Invalid username or password", "error")
             return redirect("/login")
 
         session["user_id"] = rows[0]["id"]
+        flash("Logged in successfully!", "success")
         return redirect("/")
 
     return render_template("index.html")
@@ -112,6 +118,7 @@ def login():
 @app.route("/logout")
 def logout():
     session.clear()
+    flash("Logged out successfully!", "success")
     return redirect("/login")
 
 def errorhandler(e):
