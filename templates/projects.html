@@ -9,163 +9,363 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <div class="sidebar">
-            <div class="logo">
-                <img src="https://99gifshop.neocities.org/items/11/tulips_blue_lg_clr.gif" alt="TaskZenith">
-                <h2>TaskZenith</h2>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="/"><span class="material-symbols-outlined">dashboard</span> Dashboard</a></li>
-                    <li><a href="/tasks"><span class="material-symbols-outlined">check_box</span> Tasks</a></li>
-                    <li><a href="/goals"><span class="material-symbols-outlined">flag</span> Goals</a></li>
-                    <li><a href="/schedule"><span class="material-symbols-outlined">calendar_month</span> Schedule</a></li>
-                    <li><a href="/projects" class="active"><span class="material-symbols-outlined">inventory_2</span> Projects</a></li>
-                    <li><a href="/profile"><span class="material-symbols-outlined">group</span> My Profile</a></li>
-                </ul>
-            </nav>
-            <div class="about-us">
-                <p>TaskZenith: Enhancing Productivity with SELECTION SORT</p>
-                <a href="#">About Us</a>
-            </div>
-        </div>
-        <div class="main-content">
-            <header>
-                <link rel="stylesheet" href="styles.css">
-                <div class="header-title">
-                    <h1>Projects</h1>
-                </div>
-                <div class="header-user">
-                    <div class="user-info">
-                        <span class="user-name">Langa Hasegawa</span>
-                        <span class="user-role">TaskZenith User</span>
-                    </div>
-                    <div class="user-icon">
-                        <span class="material-symbols-outlined">account_circle</span>
-                    </div>
-                </div>
-            </header>
-            <div class="projects-overview">
-                <div class="overview-item">
-                    <h3>Total Projects</h3>
-                    <p>05</p>
-                </div>
-                <div class="overview-item">
-                    <h3>Active Projects</h3>
-                    <p>03</p>
-                </div>
-                <div class="overview-item">
-                    <h3>Archived Projects</h3>
-                    <p>01</p>
-                </div>
-                <div class="overview-item">
-                    <h3>Completed Projects</h3>
-                    <p>01</p>
-                </div>
-            </div>
-            <div class="projects-list">
-                <div class="project-card high-priority">
-                    <h3>IM Final Project</h3>
-                    <div class="project-info">
-                        <p>In Progress</p>
-                        <p>High Priority</p>
-                    </div>
-                    <div class="project-team">
-                        <div class="team-members">
-                            <img src="avatar1.png" alt="Member 1">
-                            <img src="avatar2.png" alt="Member 2">
-                            <img src="avatar3.png" alt="Member 3">
-                            <span>+3 More</span>
-                        </div>
-                    </div>
-                    <div class="project-progress">
-                        <p>Task Done</p>
-                        <progress value="60" max="100"></progress>
-                    </div>
-                    <div class="project-deadline">
-                        <p>Deadline: July 13, 2024</p>
-                    </div>
-                    <button class="view-project">View Project</button>
-                </div>
-                <div class="project-card high-priority">
-                    <h3>DAA Final Project</h3>
-                    <div class="project-info">
-                        <p>In Progress</p>
-                        <p>High Priority</p>
-                    </div>
-                    <div class="project-team">
-                        <div class="team-members">
-                            <img src="avatar1.png" alt="Member 1">
-                            <img src="avatar2.png" alt="Member 2">
-                            <img src="avatar3.png" alt="Member 3">
-                            <span>+2 More</span>
-                        </div>
-                    </div>
-                    <div class="project-progress">
-                        <p>Task Done</p>
-                        <progress value="70" max="100"></progress>
-                    </div>
-                    <div class="project-deadline">
-                        <p>Deadline: July 9, 2024</p>
-                    </div>
-                    <button class="view-project">View Project</button>
-                </div>
-                <div class="project-card medium-priority">
-                    <h3>Techdoc Project</h3>
-                    <div class="project-info">
-                        <p>In Progress</p>
-                        <p>Medium Priority</p>
-                    </div>
-                    <div class="project-team">
-                        <div class="team-members">
-                            <img src="avatar1.png" alt="Member 1">
-                            <img src="avatar2.png" alt="Member 2">
-                            <img src="avatar3.png" alt="Member 3">
-                            <span>+1 More</span>
-                        </div>
-                    </div>
-                    <div class="project-progress">
-                        <p>Task Done</p>
-                        <progress value="80" max="100"></progress>
-                    </div>
-                    <div class="project-deadline">
-                        <p>Deadline: July 13, 2024</p>
-                    </div>
-                    <button class="view-project">View Project</button>
-                </div>
-            </div>
-            <div class="overall-progress">
-                <h3>Overall Progress</h3>
-                <div class="progress-circle">
-                    <svg>
-                        <circle cx="50" cy="50" r="40"></circle>
-                        <circle cx="50" cy="50" r="40" style="stroke-dashoffset: 50;"></circle>
-                    </svg>
-                    <p>40%</p>
-                </div>
-            </div>
-            <div class="activity-feed">
-                <h3>Activity</h3>
-                <ul>
-                    <li>
-                        <p>Task Finished</p>
-                        <p>30 min ago</p>
-                    </li>
-                    <li>
-                        <p>Task Overdue</p>
-                        <p>45 min ago</p>
-                    </li>
-                    <li>
-                        <p>New Task</p>
-                        <p>1 hour ago</p>
-                    </li>
-                    <li>
-                        <p>New Comment</p>
-                        <p>2 hours ago</p>
-                    </li>
-                </ul>
-            </div>
+    <div class="logo">
+        <h2 style="color: #7a4fa1;">
+            <img src="https://99gifshop.neocities.org/items/11/tulips_blue_lg_clr.gif" title="TaskZenith" width="30%">
+            TaskZenith
+        </h2>
+        <div class="close">
+            <span class="material-symbols-outlined">close</span>
         </div>
     </div>
+    <nav>
+        <ul>
+            <li><a href="/" id="dashboard-link"><span class="material-symbols-outlined">dashboard</span><span class="title">Dashboard</span></a></li>
+            <li><a href="/tasks" id="tasks-link"><span class="material-symbols-outlined">check_box</span><span class="title">Tasks</span></a></li>
+            <li><a href="/goals" id="goals-link"><span class="material-symbols-outlined">flag</span><span class="title">Goals</span></a></li>
+            <li><a href="/schedule" id="schedule-link"><span class="material-symbols-outlined">calendar_month</span><span class="title">Schedule</span></a></li>
+            <li><a href="/projects" id="projects-link" class="fill"><span class="material-symbols-outlined full">inventory_2</span><span class="title-full">Projects</span></a></li>
+            <li><a href="/profile" id="profile-link"><span class="material-symbols-outlined">group</span><span class="title">My Profile</span></a></li>
+        </ul>
+    </nav>
+{% endblock %}
+
+{% block additional_content %}
+<form autocomplete="off" id="projectForm">
+    <!-- user will input the task here -->
+    <div class="inputBox">
+        <input type="text" placeholder="Enter project" id="projectInput">
+        <button type="submit">Add Project</button>
+        <button id="sortProjectsBtn" style="background: linear-gradient(145deg, #d488ea, #8389f9);">Sort Projects</button>
+        <!-- <button id="deleteAllProjectsBtn">Delete Projects</button> -->
+    </div>
+</form>
+<main style="display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: auto; gap: 16px; overflow-y: auto;">
+    <!-- Project cards will be dynamically added here -->
+</main>
+
+<script>
+    var projectStorage = [];
+    var projectId = 0;
+    var projectSpanId = 0;
+    var projectBtnClicked = 0;
+
+    // Self-invoked function to get elements from local storage
+    (function () {
+        if (getItemOnLocalStorage('projects')) {
+            var parsed = JSON.parse(getItemOnLocalStorage('projects'));
+            var max = 0;
+            for (var i = 0; i < parsed.length; i++) {
+                createProjectElement(parsed[i], false);  // Append projects to their correct sections
+                if (parsed[i].id > max) {
+                    max = parsed[i].id;
+                }
+            }
+            projectStorage = parsed;
+            projectId = max;
+            projectSpanId = max * -1;
+
+            // Initialize process and priority classes based on stored data
+            parsed.forEach(function(project) {
+                var projectElement = document.getElementById(project.id);
+                var processElement = projectElement.querySelector('.process');
+                var priorityElement = projectElement.querySelector('.priority');
+
+                // Remove all process and priority color classes
+                processElement.classList.remove('school-color', 'work-color', 'personal-color', 'life-color');
+                priorityElement.classList.remove('low-priority', 'medium-priority', 'high-priority');
+
+                // Add the correct process color class based on project's process attribute
+                switch (project.process) {
+                    case 'School':
+                        processElement.classList.add('school-color');
+                        break;
+                    case 'Work':
+                        processElement.classList.add('work-color');
+                        break;
+                    case 'Personal':
+                        processElement.classList.add('personal-color');
+                        break;
+                    case 'Life':
+                        processElement.classList.add('life-color');
+                        break;
+                }
+
+                // Add the correct priority color class based on project's priority attribute
+                switch (project.priority) {
+                    case 'Low Priority':
+                        priorityElement.classList.add('low-priority');
+                        break;
+                    case 'Medium Priority':
+                        priorityElement.classList.add('medium-priority');
+                        break;
+                    case 'High Priority':
+                        priorityElement.classList.add('high-priority');
+                        break;
+                }
+            });
+        }
+    })();
+
+    // Submit btn function
+    document.getElementById('projectForm').addEventListener('submit', function (e) {
+        e.preventDefault(); // Prevent form submission
+        var userInput = document.getElementById('projectInput').value;
+
+        // Check if the clicked button is the "Add Project" button
+        if (e.submitter && e.submitter.innerText === "Add Project") {
+            if (userInput) {
+                var objData = {
+                    id: ++projectId,
+                    value: userInput,
+                    parent: 'inProgress',
+                    priority: 'Low Priority',
+                    process: 'School',
+                    dueDate: ''
+                };
+                createProjectElement(objData, true);
+                setItemOnLocalStorage('projects', JSON.stringify(projectStorage));
+                document.getElementById('projectInput').value = ''; // Clear the input field
+            } else {
+                alert("Please enter the project.");
+            }
+        } else if (e.submitter && e.submitter.innerText === "Sort Projects") {
+            sortProjects();
+        } else if (e.submitter && e.submitter.innerText === "Delete Projects") {
+            deleteAllProjects();
+        }
+    });
+
+    // Functions to create a new element (project)
+    function createProjectElement(objData, addToStorage) {
+        console.log('Creating element:', objData); // Debugging
+        var obj = {
+            id: objData.id,
+            value: objData.value,
+            parent: objData.parent,
+            priority: objData.priority || 'Low Priority',
+            process: objData.process || 'School',
+            dueDate: objData.dueDate || ''
+        };
+        var projectCard = document.createElement('div');
+        projectCard.className = 'projectCard';
+        document.querySelector('main').appendChild(projectCard); // Append to main section
+        createProjectCardChildren(projectCard, obj);
+        projectCard.id = objData.id;
+        projectCard.setAttribute('draggable', true);
+        projectCard.addEventListener('dragstart', function (event) {
+            event.dataTransfer.setData('text', event.target.id);
+        });
+        if (addToStorage) {
+            projectStorage.push(obj);
+        }
+    }
+
+    function togglePriority(priorityElement, projectId) {
+        var currentPriority = priorityElement.innerText.trim();
+        var newPriority;
+
+        switch (currentPriority) {
+            case 'Medium Priority':
+                newPriority = 'High Priority';
+                priorityElement.classList.remove('medium-priority');
+                priorityElement.classList.add('high-priority');
+                break;
+            case 'Low Priority':
+                newPriority = 'Medium Priority';
+                priorityElement.classList.remove('low-priority');
+                priorityElement.classList.add('medium-priority');
+                break;
+            case 'High Priority':
+                newPriority = 'Low Priority';
+                priorityElement.classList.remove('high-priority');
+                priorityElement.classList.add('low-priority');
+                break;
+        }
+
+        priorityElement.innerHTML = `<h2>${newPriority}</h2>`;
+
+        // Update the priority in storage
+        var project = projectStorage.find(item => item.id === projectId);
+        project.priority = newPriority;
+        setItemOnLocalStorage('projects', JSON.stringify(projectStorage));
+    }
+
+    function toggleProcess(processElement, projectId) {
+        var currentProcess = processElement.innerText.trim();
+        var newProcess;
+
+        switch (currentProcess) {
+            case 'School':
+                newProcess = 'Work';
+                processElement.classList.remove('school-color');
+                processElement.classList.add('work-color');
+                break;
+            case 'Work':
+                newProcess = 'Personal';
+                processElement.classList.remove('work-color');
+                processElement.classList.add('personal-color');
+                break;
+            case 'Personal':
+                newProcess = 'Life';
+                processElement.classList.remove('personal-color');
+                processElement.classList.add('life-color');
+                break;
+            case 'Life':
+                newProcess = 'School';
+                processElement.classList.remove('life-color');
+                processElement.classList.add('school-color');
+                break;
+        }
+
+        processElement.innerHTML = `<h2>${newProcess}</h2>`;
+
+        // Update the process in storage
+        var project = projectStorage.find(item => item.id === projectId);
+        project.process = newProcess;
+        setItemOnLocalStorage('projects', JSON.stringify(projectStorage));
+    }
+
+    function createProjectCardChildren(projectCard, objData) {
+        // Create project structure based on provided HTML
+        var projectTop = document.createElement('div');
+        projectTop.className = 'projectTop';
+        projectTop.innerHTML = `<h2>${objData.value}<br></h2>`;
+
+        var projectProgress = document.createElement('div');
+        projectProgress.className = 'projectProgress';
+
+        // Process
+        var process = document.createElement('div');
+        process.className = `process ${objData.process.toLowerCase()}-color`;
+        process.innerHTML = `<h2>${objData.process}</h2>`;
+        process.addEventListener('click', function() {
+            toggleProcess(process, objData.id);
+        });
+
+        // Priority
+        var priority = document.createElement('div');
+        priority.className = `priority ${objData.priority.replace(' ', '-').toLowerCase()}`;
+        priority.innerHTML = `<h2>${objData.priority}</h2>`;
+        priority.addEventListener('click', function() {
+            togglePriority(priority, objData.id);
+        });
+
+        projectProgress.appendChild(process);
+        projectProgress.appendChild(priority);
+
+        var groupImg = document.createElement('div');
+        groupImg.className = 'groupImg';
+        groupImg.innerHTML = `
+            <a href="#"><img src="/static/images/img1.jpg" alt="img1"></a>
+            <a href="#" style="--left: -10px;"><img src="/static/images/img2.jpg" alt="img2"></a>
+            <a href="#" style="--left: -20px;"><img src="/static/images/img3.jpg" alt="img3"></a>
+            <a href="#" style="--left: -30px;"><img src="/static/images/img4.jpg" alt="img4"></a>
+            <a href="#" style="--left: -40px;"><img src="/static/images/img5.jpg" alt="img5"></a>
+        `;
+
+        var task = document.createElement('div');
+        task.className = 'task';
+        task.innerHTML = `<h2>Task Done: <bold>35</bold> / 50</h2><span class="line"></span>`;
+
+        var due = document.createElement('div');
+        due.className = 'due';
+        due.innerHTML = `<h2>Due: </h2>`;
+
+        // Due date input
+        var dueDateInput = document.createElement('input');
+        dueDateInput.type = 'date';
+        dueDateInput.style.width = 'auto';
+        dueDateInput.style.display = 'inline';
+        dueDateInput.style.margin = '2px';
+        dueDateInput.value = objData.dueDate;
+        dueDateInput.addEventListener('change', function() {
+            var project = projectStorage.find(item => item.id === objData.id);
+            project.dueDate = dueDateInput.value;
+            setItemOnLocalStorage('projects', JSON.stringify(projectStorage));
+        });
+
+        due.appendChild(dueDateInput);
+
+        projectCard.appendChild(projectTop);
+        projectCard.appendChild(projectProgress);
+        projectCard.appendChild(groupImg);
+        projectCard.appendChild(task);
+        projectCard.appendChild(due);
+    }
+
+
+    // Sorting projects using SELECTION SORT ALGORITHM
+    function sortProjects() {
+        const priorityOrder = {
+            'Low Priority': 3,
+            'Medium Priority': 2,
+            'High Priority': 1
+        };
+
+        // Implementing Selection Sort algorithm
+        for (let i = 0; i < projectStorage.length - 1; i++) {
+            let minIndex = i;
+            for (let j = i + 1; j < projectStorage.length; j++) {
+                // Compare priorities first
+                if (priorityOrder[projectStorage[j].priority] < priorityOrder[projectStorage[minIndex].priority]) {
+                    minIndex = j;
+                } else if (priorityOrder[projectStorage[j].priority] === priorityOrder[projectStorage[minIndex].priority]) {
+                    // If priorities are the same, compare due dates
+                    if (projectStorage[j].dueDate && projectStorage[minIndex].dueDate) {
+                        if (new Date(projectStorage[j].dueDate) < new Date(projectStorage[minIndex].dueDate)) {
+                            minIndex = j;
+                        }
+                    } else if (!projectStorage[j].dueDate && projectStorage[minIndex].dueDate) {
+                        minIndex = j; // J has no due date, so it should come first
+                    }
+                    // No need to handle the case where minIndex has no due date and j has a due date
+                    // because it is handled by the previous if statement.
+                }
+            }
+            // Swap elements if necessary
+            if (minIndex !== i) {
+                const temp = projectStorage[i];
+                projectStorage[i] = projectStorage[minIndex];
+                projectStorage[minIndex] = temp;
+            }
+        }
+
+        // Clear existing projects from the UI
+        document.querySelector('main').innerHTML = '';
+
+        // Re-create project elements based on sorted data
+        projectStorage.forEach((project) => {
+            createProjectElement(project, false);
+        });
+
+        // Save the sorted projects back to local storage
+        setItemOnLocalStorage('projects', JSON.stringify(projectStorage));
+    }
+
+
+    // Delete all projects
+    function deleteAllProjects() {
+        // Clear the projectStorage array
+        projectStorage = [];
+
+        // Clear projects from local storage
+        localStorage.removeItem('projects');
+
+        // Clear projects from the UI
+        document.querySelector('main').innerHTML = '';
+    }
+
+    // Helper functions to interact with local storage
+    function getItemOnLocalStorage(key) {
+        return localStorage.getItem(key);
+    }
+
+    function setItemOnLocalStorage(key, value) {
+        localStorage.setItem(key, value);
+    }
+
+</script>
+
+
 {% endblock %}
