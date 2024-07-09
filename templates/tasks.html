@@ -10,7 +10,7 @@
 
 {% block content %}
     <div class="logo">
-        <h2>
+        <h2 style="color: #7a4fa1;">
             <img src="https://99gifshop.neocities.org/items/11/tulips_blue_lg_clr.gif" title="TaskZenith" width="30%">
             TaskZenith
         </h2>
@@ -38,25 +38,25 @@
         <input type="text" placeholder="Enter a task" id="userInput">
         <button type="submit">Add Task</button>
         <button id="sortTasksButton" style="background: linear-gradient(145deg, #d488ea, #8389f9);">Sort Tasks</button>
-        <button id="deleteAllTasksBtn">Delete Tasks</button>
+        <!-- <button id="deleteAllTasksBtn">Delete Tasks</button> -->
     </div>
 </form>
 <div class="tasksContainer">
     <section id="container" class="tasksContainer">
         <section>
-            <h2 class="toDo">To Do</h2>
+            <h2 class="toDo" style="color: #fff;">To Do</h2>
             <ul class="tasksSection" id="toDo" ondrop="drop(event)" ondragover="allowDrop(event)"></ul>
         </section>
         <section>
-            <h2 class="inProgress">In Progress</h2>
+            <h2 class="inProgress" style="color: #fff;">In Progress</h2>
             <ul class="tasksSection" id="inProgress" ondrop="drop(event)" ondragover="allowDrop(event)"></ul>
         </section>
         <section>
-            <h2 class="inReview">In Review</h2>
+            <h2 class="inReview" style="color: #fff;">In Review</h2>
             <ul class="tasksSection" id="inReview" ondrop="drop(event)" ondragover="allowDrop(event)"></ul>
         </section>
         <section>
-            <h2 class="completed">Completed</h2>
+            <h2 class="completed" style="color: #fff;">Completed</h2>
             <ul class="tasksSection" id="completed" ondrop="drop(event)" ondragover="allowDrop(event)"></ul>
         </section>
     </section>
@@ -174,28 +174,28 @@
     });
 
     // Functions to create a new element (task)
-    function createElement(objData, addToStorage) {
-        console.log('Creating element:', objData); // Debugging
-        var obj = {
-            id: objData.id,
-            value: objData.value,
-            parent: objData.parent,
-            priority: objData.priority || 'Low Priority',
-            process: objData.process || 'School',
-            dueDate: objData.dueDate || ''
-        };
-        var list = document.createElement('li');
-        document.getElementById(obj.parent).appendChild(list);
-        createListChildren(list, obj);
-        list.id = objData.id;
-        list.setAttribute('draggable', true);
-        list.addEventListener('dragstart', function (event) {
-            event.dataTransfer.setData('text', event.target.id);
-        });
-        if (addToStorage) {
-            storage.push(obj);
-        }
+function createElement(objData, addToStorage) {
+    console.log('Creating element:', objData); // Debugging
+    var obj = {
+        id: objData.id,
+        value: objData.value,
+        parent: objData.parent,
+        priority: objData.priority || 'Low Priority',
+        process: objData.process || 'School',
+        dueDate: objData.dueDate || ''
+    };
+    var list = document.createElement('li');
+    document.getElementById(obj.parent).appendChild(list);
+    createListChildren(list, obj);
+    list.id = objData.id;
+    list.setAttribute('draggable', true);
+    list.addEventListener('dragstart', function (event) {
+        event.dataTransfer.setData('text', event.target.id);
+    });
+    if (addToStorage) {
+        storage.push(obj);
     }
+}
 
     function togglePriority(priorityElement, taskId) {
         var currentPriority = priorityElement.innerText.trim();
