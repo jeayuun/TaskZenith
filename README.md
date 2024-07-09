@@ -7,8 +7,7 @@ Final Project for COSC 203: DESIGN AND ANALYSIS OF ALGORITHMS - PUP BSCS 2-1N A.
 > TaskZenith is designed to provide a tool for organizing and prioritizing tasks by making use of the Selection Sort Algorithm, which is well known for its simplicity and effectiveness in handling smaller datasets. It allows users to manage tasks, goals, schedules, and projects effectively, all while ensuring a consistent and visually appealing design. TaskZenith's user interface was developed using HTML, CSS, and JavaScript as its main programming languages in order to provide a responsive and interactive user-friendly application. The back end was developed using Python Flask to handle server-side operations and manage data from the application. The development of TaskZenith highlights the importance of implementing computer science concepts to develop primary solutions that will improve everyday life. 
 
 ### ***Dashboard***
-![Dashboard](https://github.com/jeayuun/TaskZenith/blob/main/dashboard.png?raw=true)
-
+![Dashboard](https://github.com/jeayuun/TaskZenith/blob/main/Screenshots/dashboard.png?raw=true)
 
 ## Table of Contents
 - [Project Structure](#project-structure)
@@ -56,19 +55,19 @@ Serves as the base template for all other HTML templates in the TaskZenith appli
 
 #### dashboard.html
 The template for the home page, which users see after logging in. It serves as a central hub, displaying an overview of tasks, goals, schedule, and projects.
-![Dashboard](https://github.com/jeayuun/TaskZenith/blob/main/dashboard.png?raw=true)
+![Dashboard](https://github.com/jeayuun/TaskZenith/blob/main/Screenshots/dashboard.png?raw=true)
 
 #### tasks.html
 The template for the tasks management page. It allows users to view, add, and manage their tasks (sort tasks with the use of SELECTION SORT ALGORITHM) within the application.
-![Tasks](https://github.com/jeayuun/TaskZenith/blob/main/Tasks.png?raw=true)
+![Tasks](https://github.com/jeayuun/TaskZenith/blob/main/Screenshots/Tasks.png?raw=true)
 
 #### goals.html
 The template for the goals management page. It provides an interface for users to set and track their personal or professional goals. Also sorts goals with the use of SELECTION SORT ALGORITHM.
-![Goals](https://github.com/jeayuun/TaskZenith/blob/main/Goals.png?raw=true)
+![Goals](https://github.com/jeayuun/TaskZenith/blob/main/Screenshots/Goals.png?raw=true)
 
 #### schedule.html
 The template for the schedule management page. Users can view and manage their schedules, ensuring they stay on top of their appointments and deadlines. Daily events are scheduled automatically based on time schedule, it utilizes SELECTION SORT ALGORITHM in doing so.
-![Schedule](https://github.com/jeayuun/TaskZenith/blob/main/Schedule.png?raw=true)
+![Schedule](https://github.com/jeayuun/TaskZenith/blob/main/Screenshots/Schedule.png?raw=true)
 
 #### projects.html
 The template for the projects management page. It allows users to organize and monitor the progress of their projects (sort projects with the use of SELECTION SORT ALGORITHM).
