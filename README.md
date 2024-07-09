@@ -60,6 +60,7 @@ The template for the home page, which users see after logging in. It serves as a
 
 #### tasks.html
 The template for the tasks management page. It allows users to view, add, and manage their tasks (sort tasks with the use of SELECTION SORT ALGORITHM) within the application.
+![Tasks](https://github.com/jeayuun/TaskZenith/blob/main/Tasks.png?raw=true)
 
 #### goals.html
 The template for the goals management page. It provides an interface for users to set and track their personal or professional goals. Also sorts goals with the use of SELECTION SORT ALGORITHM.
